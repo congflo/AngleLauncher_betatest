@@ -1,0 +1,13 @@
+/packages
+/artifacts
+/JavaApp/.gradle
+/JavaApp/build
+/JavaApp/local_out
+/Natives/AngleLauncher
+/Natives/build
+.DS_Store
+/AngleLauncher.xcodeproj/xcshareddata/*
+/AngleLauncher.xcodeproj/xcuserdata/*
+/AngleLauncher.xcodeproj/project.xcworkspace/*
+/depends
+/Natives/config.h
