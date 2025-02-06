@@ -36,7 +36,7 @@ extern "C" {
 ** Khronos $Git commit SHA1: cb927ca98d $ on $Git commit date: 2019-08-08 01:05:38 -0700 $
 */
 
-#include <EGL/eglplatform.h>
+#include "eglplatform.h"
 
 #define EGL_EGLEXT_VERSION 20190808
 
@@ -1361,6 +1361,9 @@ EGLAPI EGLuint64NV EGLAPIENTRY eglGetSystemTimeNV (void);
 #define EGL_TIZEN_image_native_surface 1
 #define EGL_NATIVE_SURFACE_TIZEN          0x32A1
 #endif /* EGL_TIZEN_image_native_surface */
+
+/* ANGLE EGL extensions */
+#include "eglext_angle.h"
 
 #ifdef __cplusplus
 }

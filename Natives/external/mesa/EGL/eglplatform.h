@@ -34,7 +34,7 @@
  * by filing a bug against product "EGL" component "Registry".
  */
 
-#include <KHR/khrplatform.h>
+#include "../KHR/khrplatform.h"
 
 /* Macros used in EGL function prototype declarations.
  *
@@ -54,12 +54,6 @@
 #define EGLAPIENTRY  KHRONOS_APIENTRY
 #endif
 #define EGLAPIENTRYP EGLAPIENTRY*
-
-#if defined(MESA_EGL_NO_X11_HEADERS) && !defined(EGL_NO_X11)
-#warning "`MESA_EGL_NO_X11_HEADERS` is deprecated, and doesn't work with the unmodified Khronos header"
-#warning "Please use `EGL_NO_X11` instead, as `MESA_EGL_NO_X11_HEADERS` will be removed soon"
-#define EGL_NO_X11
-#endif
 
 /* The types NativeDisplayType, NativeWindowType, and NativePixmapType
  * are aliases of window-system-dependent types, such as X Display * or
@@ -81,13 +75,13 @@
 
 typedef HDC     EGLNativeDisplayType;
 typedef HBITMAP EGLNativePixmapType;
+
+#if !defined(WINAPI_FAMILY) || (WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP) /* Windows Desktop */
 typedef HWND    EGLNativeWindowType;
-
-#elif defined(__EMSCRIPTEN__)
-
-typedef int EGLNativeDisplayType;
-typedef int EGLNativePixmapType;
-typedef int EGLNativeWindowType;
+#else /* Windows Store */
+#include <inspectable.h>
+typedef IInspectable* EGLNativeWindowType;
+#endif
 
 #elif defined(__WINSCW__) || defined(__SYMBIAN32__)  /* Symbian */
 
@@ -116,17 +110,11 @@ typedef void*                           EGLNativeDisplayType;
 typedef struct egl_native_pixmap_t*     EGLNativePixmapType;
 typedef struct ANativeWindow*           EGLNativeWindowType;
 
-#elif defined(USE_OZONE)
+#elif defined(USE_OZONE) || defined(USE_SYSTEM_EGL)
 
 typedef intptr_t EGLNativeDisplayType;
 typedef intptr_t EGLNativePixmapType;
 typedef intptr_t EGLNativeWindowType;
-
-#elif defined(__unix__) && defined(EGL_NO_X11)
-
-typedef void             *EGLNativeDisplayType;
-typedef khronos_uintptr_t EGLNativePixmapType;
-typedef khronos_uintptr_t EGLNativeWindowType;
 
 #elif defined(__unix__) || defined(USE_X11)
 
@@ -152,10 +140,12 @@ typedef void              *EGLNativeDisplayType;
 typedef khronos_uintptr_t  EGLNativePixmapType;
 typedef khronos_uintptr_t  EGLNativeWindowType;
 
-#elif defined(__QNXNTO__)
-typedef struct _gf_dev* EGLNativeDisplayType;
-typedef void* EGLNativeWindowType;
-typedef void* EGLNativePixmapType;
+#elif defined(__Fuchsia__)
+
+typedef int   EGLNativeDisplayType;
+typedef void *EGLNativePixmapType;
+typedef void *EGLNativeWindowType
+
 #else
 #error "Platform not recognized"
 #endif
