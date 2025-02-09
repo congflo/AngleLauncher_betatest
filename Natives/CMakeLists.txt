@@ -64,9 +64,8 @@ add_library(tinygl4angle SHARED
 target_link_libraries(tinygl4angle
   "${GLOBAL_LDFLAGS}"
   "-F'${CMAKE_CURRENT_LIST_DIR}/resources/Frameworks'"
-#  "-framework libEGL"
-#  "-framework libGLESv2"
-   "-framework MetalANGLE"
+  "-framework libEGL"
+  "-framework libGLESv2"
 )
 
 # AFNetworking
