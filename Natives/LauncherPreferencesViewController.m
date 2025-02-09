@@ -96,13 +96,12 @@
               },
               @"pickKeys": @[
                   @"AppIcon-Light",
-                  @"AppIcon-Dark",
-                  @"AppIcon-Development"
+                  @"AppIcon-Dark"
               ],
               @"pickList": @[
                   localize(@"preference.title.appicon-default", nil),
-                  localize(@"preference.title.appicon-dark", nil),
-                  localize(@"preference.title.appicon-development", nil)
+                  localize(@"preference.title.appicon-dark", nil)
+
               ]
             },
             @{@"key": @"hidden_sidebar",
@@ -173,7 +172,7 @@
               @"icon": @"viewfinder",
               @"type": self.typeSlider,
               @"min": @(25),
-              @"max": @(150)
+              @"max": @(100)
             },
             @{@"key": @"max_framerate",
               @"hasDetail": @YES,
