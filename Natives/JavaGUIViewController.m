@@ -498,7 +498,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     return YES;
 }
 
-
+/*
 - (void)toggleSoftKeyboard {
     if (self.inputTextField.isFirstResponder) {
         [self.inputTextField resignFirstResponder];
@@ -506,6 +506,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self.inputTextField becomeFirstResponder];
     }
 }
+*/
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
