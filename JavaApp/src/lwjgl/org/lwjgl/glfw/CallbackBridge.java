@@ -15,7 +15,7 @@ public class CallbackBridge {
     public static final int EVENT_TYPE_SCROLL = 1007;
     public static final int EVENT_TYPE_WINDOW_SIZE = 1008;
     
-    public static final int ANDROID_TYPE_GRAB_STATE = 1;
+    public static final int ANDROID_TYPE_GRAB_STATE = 0;
     
     public static final boolean INPUT_DEBUG_ENABLED;
     
