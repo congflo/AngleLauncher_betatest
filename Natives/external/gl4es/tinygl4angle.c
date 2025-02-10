@@ -4,6 +4,7 @@
 
 #define GL_GLEXT_PROTOTYPES
 
+#include "EGL/egl.h"
 #include "GL/gl.h"
 #include "GL/glext.h"
 #include "GLES3/gl32.h"
