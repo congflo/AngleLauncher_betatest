@@ -21,7 +21,7 @@
 
 // Core OpenGL 2.0
 AliasDecl(glGetTexImage, ANGLE)
-AliasDecl(glMapBuffer, OES)
+AliasDecl(glMapBuffer, ANGLE)
 
 // GL_KHR_debug
 AliasDecl(glDebugMessageCallback, KHR)
