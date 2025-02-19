@@ -66,7 +66,6 @@ target_link_libraries(tinygl4angle
   "-F'${CMAKE_CURRENT_LIST_DIR}/resources/Frameworks'"
   "-framework libEGL"
   "-framework libGLESv2"
-  "-framework ANGLEGLKit"
 )
 
 # AFNetworking
