@@ -20,7 +20,7 @@
     asm(".global _"# NAME "\n_" #NAME ": b _" #NAME #EXT);
 
 // Core OpenGL 2.0
-AliasDecl(glGetTexImage, OES)
+AliasDecl(glGetTexImage, ANGLE)
 AliasDecl(glMapBuffer, OES)
 
 // GL_KHR_debug
