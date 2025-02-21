@@ -195,6 +195,12 @@ static GameSurfaceView* pojavWindow;
 
     self.inputTextField = [[TrackedTextField alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
 
+    self.inputTextField.backgroundColor = UIColor.secondarySystemBackgroundColor;
+    self.inputTextField.delegate = self;
+    self.inputTextField.font = [UIFont fontWithName:@"Menlo-Regular" size:20];
+    self.inputTextField.clearsOnBeginEditing = YES;
+    self. inputTextField.textAlignment = NSTextAlignmentLeft;
+
     self.inputTextField.sendChar = ^(jchar keychar){
         CallbackBridge_nativeSendChar(keychar);
     };
@@ -273,11 +279,10 @@ static GameSurfaceView* pojavWindow;
     [cancelButton setTitle:@"Huỷ" forState:UIControlStateNormal];
     [cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 
-    UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(32, 0, 200, 30)];
-    [accessoryView addSubview:okButton];
-    [accessoryView addSubview:cancelButton];
-    self.inputTextField.inputAccessoryView = accessoryView;
-    accessoryView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self.rootView addSubview:okButton];
+    [self.rootView addSubview:cancelButton];
+    //self.inputTextField.inputAccessoryView = accessoryView;
+    self.rootView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     [self performSelector:@selector(initCategory_LogView)];
 
