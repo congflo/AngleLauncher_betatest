@@ -193,7 +193,7 @@ static GameSurfaceView* pojavWindow;
     self.mousePointerView.userInteractionEnabled = NO;
     [self.touchView addSubview:self.mousePointerView];
 
-    self.inputTextField = [[TrackedTextField alloc] initWithFrame:CGRectMake(0, -32, 200, 30)];
+    self.inputTextField = [[TrackedTextField alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
 
     self.inputTextField.sendChar = ^(jchar keychar){
         CallbackBridge_nativeSendChar(keychar);
@@ -273,7 +273,7 @@ static GameSurfaceView* pojavWindow;
     [cancelButton setTitle:@"Huỷ" forState:UIControlStateNormal];
     [cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 
-    UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+    UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(32, 0, 200, 30)];
     [accessoryView addSubview:okButton];
     [accessoryView addSubview:cancelButton];
     self.inputTextField.inputAccessoryView = accessoryView;
