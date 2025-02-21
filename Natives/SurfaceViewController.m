@@ -306,6 +306,7 @@ static GameSurfaceView* pojavWindow;
 - (void)cancelButtonTapped:(UIButton *)button {
     inputTexField.text = @"";
     [inputTextField resignFirstResponder];
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
