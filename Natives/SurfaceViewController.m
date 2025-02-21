@@ -271,11 +271,11 @@ static GameSurfaceView* pojavWindow;
 //OK and Cancel button
     UIButton *okButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [okButton setTitle:@"OK" forState:UIControlStateNormal];
-    [okButton addTarget:self action:@selector(okButtonTapped:) forControlEvents:UIControllEventTouchUpInside];
+    [okButton addTarget:self action:@selector(okButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 
     UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [cancelButton setTitle:@"Huỷ" forState:UIControlStateNormal];
-    [cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControllEventTouchUpInside];
+    [cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 
     UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
     [accessoryView addSubview:okButton];
