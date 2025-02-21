@@ -193,7 +193,7 @@ static GameSurfaceView* pojavWindow;
     self.mousePointerView.userInteractionEnabled = NO;
     [self.touchView addSubview:self.mousePointerView];
 
-    self.inputTextField = [[TrackedTextField alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+    self.inputTextField = [[TrackedTextField alloc] initWithFrame:CGRectMake(0, -32, 200, 30)];
 
     self.inputTextField.sendChar = ^(jchar keychar){
         CallbackBridge_nativeSendChar(keychar);
