@@ -268,6 +268,21 @@ static GameSurfaceView* pojavWindow;
 
     [self.rootView addSubview:self.inputTextField];
 
+//OK and Cancel button
+    UIButton *okButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [okButton setTitle:@"OK" forState:UIControlStateNormal];
+    [okButton addTarget:self action:@selector(okButtonTapped:) forControlEvents:UIControllEventTouchUpInside];
+
+    UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [cancelButton setTitle:@"Huỷ" forState:UIControlStateNormal];
+    [cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControllEventTouchUpInside];
+
+    UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+    [accessoryView addSubview:okButton];
+    [accessoryView addSubview:cancelButton];
+    inputTextField.inputAccessoryView = accessoryView;
+    accessoryView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+
     [self performSelector:@selector(initCategory_LogView)];
 
     // [self setPreferredFramesPerSecond:1000];
@@ -282,6 +297,15 @@ static GameSurfaceView* pojavWindow;
 
     [self launchMinecraft];
 }
+
+//OK and Cancel button
+- (void)okButtonTapped:(UIButton *)button {
+    [inputTextField resignFirstResponder];
+}
+
+- (void)cancelButtonTapped:(UIButton *)button {
+    inputTexField.text = @"";
+    [inputTextField resignFirstResponder];
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
