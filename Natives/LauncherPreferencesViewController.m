@@ -96,13 +96,11 @@
               },
               @"pickKeys": @[
                   @"AppIcon-Light",
-                  @"AppIcon-Dark",
-                  @"AppIcon-Development"
+                  @"AppIcon-Dark"
               ],
               @"pickList": @[
                   localize(@"preference.title.appicon-default", nil),
-                  localize(@"preference.title.appicon-dark", nil),
-                  localize(@"preference.title.appicon-development", nil)
+                  localize(@"preference.title.appicon-dark", nil)
               ]
             },
             @{@"key": @"hidden_sidebar",
@@ -135,14 +133,14 @@
               @"icon": @"trash",
               @"type": self.typeButton,
               @"enableCondition": ^BOOL(){
-                  NSString *demoPath = [NSString stringWithFormat:@"%s/.demo", getenv("POJAV_HOME")];
+                  NSString *demoPath = [NSString stringWithFormat:@"%s/instances/default", getenv("POJAV_HOME")];
                   int count = [NSFileManager.defaultManager contentsOfDirectoryAtPath:demoPath error:nil].count;
                   return whenNotInGame() && count > 0;
               },
               @"showConfirmPrompt": @YES,
               @"destructive": @YES,
               @"action": ^void(){
-                  NSString *demoPath = [NSString stringWithFormat:@"%s/.demo", getenv("POJAV_HOME")];
+                  NSString *demoPath = [NSString stringWithFormat:@"%s/instances/default", getenv("POJAV_HOME")];
                   NSError *error;
                   if([NSFileManager.defaultManager removeItemAtPath:demoPath error:&error]) {
                       [NSFileManager.defaultManager createDirectoryAtPath:demoPath
@@ -173,7 +171,7 @@
               @"icon": @"viewfinder",
               @"type": self.typeSlider,
               @"min": @(25),
-              @"max": @(150)
+              @"max": @(100)
             },
             @{@"key": @"max_framerate",
               @"hasDetail": @YES,
