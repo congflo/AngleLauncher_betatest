@@ -280,7 +280,7 @@ static GameSurfaceView* pojavWindow;
     UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
     [accessoryView addSubview:okButton];
     [accessoryView addSubview:cancelButton];
-    inputTextField.inputAccessoryView = accessoryView;
+    _inputTextField.inputAccessoryView = accessoryView;
     accessoryView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     [self performSelector:@selector(initCategory_LogView)];
@@ -300,12 +300,12 @@ static GameSurfaceView* pojavWindow;
 
 //OK and Cancel button
 - (void)okButtonTapped:(UIButton *)button {
-    [inputTextField resignFirstResponder];
+    [_inputTextField resignFirstResponder];
 }
 
 - (void)cancelButtonTapped:(UIButton *)button {
-    inputTexField.text = @"";
-    [inputTextField resignFirstResponder];
+    _inputTexField.text = @"";
+    [_inputTextField resignFirstResponder];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
