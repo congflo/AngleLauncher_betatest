@@ -194,11 +194,7 @@ static GameSurfaceView* pojavWindow;
     [self.touchView addSubview:self.mousePointerView];
 
     self.inputTextField = [[TrackedTextField alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
-    self.inputTextField.backgroundColor = UIColor.secondarySystemBackgroundColor;
-    self.inputTextField.delegate = self;
-    self.inputTextField.font = [UIFont fontWithName:@"Menlo-Regular" size:20];
-    self.inputTextField.clearsOnBeginEditing = YES;
-    self.inputTextField.textAlignment = NSTextAlignmentLeft;
+
     self.inputTextField.sendChar = ^(jchar keychar){
         CallbackBridge_nativeSendChar(keychar);
     };
@@ -280,7 +276,7 @@ static GameSurfaceView* pojavWindow;
     UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
     [accessoryView addSubview:okButton];
     [accessoryView addSubview:cancelButton];
-    _inputTextField.inputAccessoryView = accessoryView;
+    self.inputTextField.inputAccessoryView = accessoryView;
     accessoryView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     [self performSelector:@selector(initCategory_LogView)];
@@ -300,12 +296,12 @@ static GameSurfaceView* pojavWindow;
 
 //OK and Cancel button
 - (void)okButtonTapped:(UIButton *)button {
-    [_inputTextField resignFirstResponder];
+    [self.inputTextField resignFirstResponder];
 }
 
 - (void)cancelButtonTapped:(UIButton *)button {
-    _inputTextField.text = @"";
-    [_inputTextField resignFirstResponder];
+    self.inputTextField.text = @"";
+    [self.inputTextField resignFirstResponder];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
