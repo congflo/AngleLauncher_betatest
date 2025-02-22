@@ -314,14 +314,14 @@ static GameSurfaceView* pojavWindow;
     [self launchMinecraft];
 }
 
-//OK and Cancel button
+//Done and Cancel button
 - (void)doneButtonTapped:(UIBarButtonItem *)button {
-    [self.inputTextField resignFirstResponder];
+    [self.view endEditing:YES];
 }
 
 - (void)cancelButtonTapped:(UIBarButtonItem *)button {
-    self.inputTextField.text = @"";
-    [self.inputTextField resignFirstResponder];
+    self.textField.text = @"";
+    [self.view endEditing:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -878,16 +878,18 @@ static GameSurfaceView* pojavWindow;
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     CallbackBridge_nativeSendKey(GLFW_KEY_ENTER, 0, 1, 0);
     CallbackBridge_nativeSendKey(GLFW_KEY_ENTER, 0, 0, 0);
-    textField.text = @" ";
+    textField.text = @"";
     return YES;
 }
 
 // Đặt textField để nó update  text của inputTextField
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
 
-    self.inputTextField.text = textField.text;
+    NSString *newText = [textField.text stringByReplacingCharactersInRange:range withString:string];
 
-    return YES;
+    self.inputTextField.text = newText;
+
+    return NO;
 }
 
 // Chọn accessoryView làm trường văn bản khi kích hoạt bàn phím
@@ -897,6 +899,10 @@ static GameSurfaceView* pojavWindow;
         [self.inputTextField setInputAccessoryView:self.accessoryView];
         [textField becomeFirstResponder];
     }
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+
+    self.inputTextField.text = textField.text;
 }
 
 #pragma mark - On-screen button functions
