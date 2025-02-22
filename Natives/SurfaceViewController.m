@@ -291,7 +291,7 @@ static GameSurfaceView* pojavWindow;
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTapped:)];
     toolbar.items = @[cancelButton];
 
-    [toolbar setItems:@[[[UIBarButtonItem alloc] initWithCustomView:accessoryView], doneButton, cancelButton]];
+    [toolbar setItems:@[[[UIBarButtonItem alloc] initWithCustomView:self.accessoryView], doneButton, cancelButton]];
     self.inputTextField.inputAccessoryView = toolbar;
     self.inputTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
