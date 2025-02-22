@@ -194,8 +194,9 @@ static GameSurfaceView* pojavWindow;
     self.mousePointerView.userInteractionEnabled = NO;
     [self.touchView addSubview:self.mousePointerView];
 
-    self.inputTextField = [[TrackedTextField alloc] initWithFrame:CGRectMake(0, -32.0, 1, 30)];
-
+    self.inputTextField = [[TrackedTextField alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    self.accessoryView.borderStyle = UITextBorderStyleRoundedRect;
+    self.accessoryView.placeholder = @"Type here...";
     self.inputTextField.backgroundColor = UIColor.secondarySystemBackgroundColor;
     self.inputTextField.delegate = self;
     self.inputTextField.font = [UIFont fontWithName:@"Menlo-Regular" size:20];
@@ -281,21 +282,14 @@ static GameSurfaceView* pojavWindow;
     self.accessoryView.placeholder = @"Type here...";
     self.accessoryView.userInteractionEnabled = YES;
 
-    //textField for accessoryView
-    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
-
-    [self.accessoryView addSubview:textField];
-
-    textField.delegate = self;
-
-    //OK and Cancel button
+    //Done and Cancel button
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped:)];
     toolbar.items = @[doneButton];
 
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTapped:)];
     toolbar.items = @[cancelButton];
 
-    [toolbar setItems:@[[[UIBarButtonItem alloc] initWithCustomView:self.accessoryView], doneButton, cancelButton]];
+    [toolbar setItems:@[[[UIBarButtonItem alloc] initWithCustomView:self.inputTextField], doneButton, cancelButton]];
     self.inputTextField.inputAccessoryView = toolbar;
     self.inputTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
@@ -320,7 +314,7 @@ static GameSurfaceView* pojavWindow;
 }
 
 - (void)cancelButtonTapped:(UIBarButtonItem *)button {
-    self.accessoryView.text = @"";
+    self.inputTextField.text = @"";
     [self.view endEditing:YES];
 }
 
@@ -882,18 +876,7 @@ static GameSurfaceView* pojavWindow;
     return YES;
 }
 
-// Chọn accessoryView làm trường văn bản khi kích hoạt bàn phím
-- (void)textFielDidBeginEditing:(UITextField *)textField {
 
-    if (self.accessoryView == self.inputTextField) {
-        [self.inputTextField setInputAccessoryView:self.accessoryView];
-        [self.accessoryView becomeFirstResponder];
-    }
-}
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-
-    self.inputTextField.text = textField.text;
-}
 
 #pragma mark - On-screen button functions
 
@@ -909,7 +892,7 @@ static GameSurfaceView* pojavWindow;
                             [self.inputTextField resignFirstResponder];
                             self.inputTextField.alpha = 1.0f;
                         } else {
-                            [self.accessoryView becomeFirstResponder];
+                            [self.inputTextField becomeFirstResponder];
                             // Insert an undeletable space
                             self.inputTextField.text = @"";
                         }
