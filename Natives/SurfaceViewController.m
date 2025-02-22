@@ -199,8 +199,6 @@ static GameSurfaceView* pojavWindow;
     self.inputTextField.backgroundColor = UIColor.secondarySystemBackgroundColor;
     self.inputTextField.delegate = self;
     self.inputTextField.font = [UIFont fontWithName:@"Menlo-Regular" size:20];
-    self.inputTextField.placeholder = @"Type here...";
-    //self.inputTextField.text = self.accessoryView.text;
     self.inputTextField.clearsOnBeginEditing = NO;
     self.inputTextField.textAlignment = NSTextAlignmentCenter;
 
@@ -279,10 +277,16 @@ static GameSurfaceView* pojavWindow;
 
     //AccessoryView
     self.accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
-    //self.accessoryView.delegate = self;
     self.accessoryView.borderStyle = UITextBorderStyleRoundedRect;
     self.accessoryView.placeholder = @"Type here...";
     self.accessoryView.userInteractionEnabled = YES;
+
+    //textField for accessoryView
+    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+
+    [self.accessoryView addSubview:textField];
+
+    textField.delegate = self;
 
     //OK and Cancel button
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped:)];
@@ -291,7 +295,7 @@ static GameSurfaceView* pojavWindow;
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTapped:)];
     toolbar.items = @[cancelButton];
 
-    [toolbar setItems:@[[[UIBarButtonItem alloc] initWithCustomView:self.inputTextField], doneButton, cancelButton]];
+    [toolbar setItems:@[[[UIBarButtonItem alloc] initWithCustomView:self.accessoryView], doneButton, cancelButton]];
     self.inputTextField.inputAccessoryView = toolbar;
     self.inputTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
@@ -876,6 +880,23 @@ static GameSurfaceView* pojavWindow;
     CallbackBridge_nativeSendKey(GLFW_KEY_ENTER, 0, 0, 0);
     textField.text = @" ";
     return YES;
+}
+
+// Đặt textField để nó update  text của inputTextField
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+
+    self.inputTextField.text = textField.text;
+
+    return YES;
+}
+
+// Chọn accessoryView làm trường văn bản khi kích hoạt bàn phím
+- (void)textFielDidBeginEditing:(UITextField *)textField {
+
+    if (textField == self.inputTextField) {
+        [self.inputTextField setInputAccessoryView:accessoryView];
+        [textField becomeFirstResponder];
+    }
 }
 
 #pragma mark - On-screen button functions
