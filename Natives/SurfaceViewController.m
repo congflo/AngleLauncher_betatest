@@ -196,10 +196,12 @@ static GameSurfaceView* pojavWindow;
     self.inputTextField = [[TrackedTextField alloc] initWithFrame:CGRectMake(0, -32.0, 1, 30)];
 
     self.inputTextField.backgroundColor = UIColor.secondarySystemBackgroundColor;
-    self.inputTextField.delegate = self;
+    //self.inputTextField.delegate = self;
     self.inputTextField.font = [UIFont fontWithName:@"Menlo-Regular" size:20];
+    self.inputTextField.placeholder = @"Type here...";
+    self.inputTextField.text = accessoryView.text;
     self.inputTextField.clearsOnBeginEditing = NO;
-    self. inputTextField.textAlignment = NSTextAlignmentCenter;
+    self.inputTextField.textAlignment = NSTextAlignmentCenter;
 
     self.inputTextField.sendChar = ^(jchar keychar){
         CallbackBridge_nativeSendChar(keychar);
@@ -276,6 +278,7 @@ static GameSurfaceView* pojavWindow;
 
     //AccessoryView
     UITextField *accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    accessoryView.delegate = self;
     accessoryView.borderStyle = UITextBorderStyleRoundedRect;
     accessoryView.placeholder = @"Type here...";
     accessoryView.userInteractionEnabled = YES;
