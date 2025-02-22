@@ -130,25 +130,25 @@ jobs:
             gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }}
           fi
 
-      - name: Upload regular ipa
+      - name: Upload ipa
         uses: actions/upload-artifact@main
         with:
           name: AngleLauncher-${{ matrix.platform_name }}.ipa
           path: artifacts/AngleLauncher-*-${{ matrix.platform_name }}.ipa
 
-      - name: Upload regular tipa
+      - name: Upload tipa
         uses: actions/upload-artifact@main
         with:
           name: AngleLauncher-${{ matrix.platform_name }}-trollstore.tipa
           path: artifacts/AngleLauncher-*-${{ matrix.platform_name }}-trollstore.tipa
 
-      - name: Upload slimmed ipa
+      - name: Upload no-runtime ipa
         uses: actions/upload-artifact@main
         with:
           name: AngleLauncher-no-runtime-${{ matrix.platform_name }}.ipa
           path: artifacts/AngleLauncher-no-runtime-*-${{ matrix.platform_name }}.ipa
 
-      - name: Upload slimmed tipa
+      - name: Upload no-runtime tipa
         uses: actions/upload-artifact@main
         with:
           name: AngleLauncher-no-runtime-${{ matrix.platform_name }}-trollstore.tipa

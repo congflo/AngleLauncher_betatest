@@ -197,10 +197,10 @@ static GameSurfaceView* pojavWindow;
     self.inputTextField = [[TrackedTextField alloc] initWithFrame:CGRectMake(0, -32.0, 1, 30)];
 
     self.inputTextField.backgroundColor = UIColor.secondarySystemBackgroundColor;
-    //self.inputTextField.delegate = self;
+    self.inputTextField.delegate = self;
     self.inputTextField.font = [UIFont fontWithName:@"Menlo-Regular" size:20];
     self.inputTextField.placeholder = @"Type here...";
-    self.inputTextField.text = self.accessoryView.text;
+    //self.inputTextField.text = self.accessoryView.text;
     self.inputTextField.clearsOnBeginEditing = NO;
     self.inputTextField.textAlignment = NSTextAlignmentCenter;
 
@@ -279,7 +279,7 @@ static GameSurfaceView* pojavWindow;
 
     //AccessoryView
     self.accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
-    self.accessoryView.delegate = self;
+    //self.accessoryView.delegate = self;
     self.accessoryView.borderStyle = UITextBorderStyleRoundedRect;
     self.accessoryView.placeholder = @"Type here...";
     self.accessoryView.userInteractionEnabled = YES;
@@ -291,7 +291,7 @@ static GameSurfaceView* pojavWindow;
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTapped:)];
     toolbar.items = @[cancelButton];
 
-    [toolbar setItems:@[[[UIBarButtonItem alloc] initWithCustomView:self.accessoryView], doneButton, cancelButton]];
+    [toolbar setItems:@[[[UIBarButtonItem alloc] initWithFrame:CGRectMake(0, 0, 320, 30):self.inputTextField], doneButton, cancelButton]];
     self.inputTextField.inputAccessoryView = toolbar;
     self.inputTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
@@ -894,7 +894,7 @@ static GameSurfaceView* pojavWindow;
                         } else {
                             [self.inputTextField becomeFirstResponder];
                             // Insert an undeletable space
-                            self.accessoryView.text = @"";
+                            self.inputTextField.text = @"";
                         }
                     }
                     break;
