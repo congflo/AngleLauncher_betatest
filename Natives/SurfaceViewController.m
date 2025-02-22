@@ -290,7 +290,7 @@ static GameSurfaceView* pojavWindow;
     //[toolbar addSubview:doneButton];
     //[toolbar addSubview:cancelButton];
 
-    self.accessoryView.inputAccessoryView = toolbar;
+    self.rootView.inputAccessoryView = toolbar;
     self.inputTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     [self performSelector:@selector(initCategory_LogView)];
