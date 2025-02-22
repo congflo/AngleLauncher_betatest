@@ -320,7 +320,7 @@ static GameSurfaceView* pojavWindow;
 }
 
 - (void)cancelButtonTapped:(UIBarButtonItem *)button {
-    UITextField.text = @"";
+    self.accessoryView.text = @"";
     [self.view endEditing:YES];
 }
 
@@ -882,22 +882,12 @@ static GameSurfaceView* pojavWindow;
     return YES;
 }
 
-// Đặt textField để nó update  text của inputTextField
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-
-    NSString *newText = [textField.text stringByReplacingCharactersInRange:range withString:string];
-
-    self.inputTextField.text = newText;
-
-    return NO;
-}
-
 // Chọn accessoryView làm trường văn bản khi kích hoạt bàn phím
 - (void)textFielDidBeginEditing:(UITextField *)textField {
 
-    if (textField == self.inputTextField) {
+    if (self.accessoryView == self.inputTextField) {
         [self.inputTextField setInputAccessoryView:self.accessoryView];
-        [textField becomeFirstResponder];
+        [self.accessoryView becomeFirstResponder];
     }
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField {
@@ -919,7 +909,7 @@ static GameSurfaceView* pojavWindow;
                             [self.inputTextField resignFirstResponder];
                             self.inputTextField.alpha = 1.0f;
                         } else {
-                            [self.inputTextField becomeFirstResponder];
+                            [self.accessoryView becomeFirstResponder];
                             // Insert an undeletable space
                             self.inputTextField.text = @"";
                         }
