@@ -277,7 +277,8 @@ static GameSurfaceView* pojavWindow;
     //AccessoryView
     UITextField *accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
     accessoryView.borderStyle = UITextBorderStyleRoundedRect;
-    accessoryView.enabled = YES; //Cho phép nhập vào đây
+    accessoryView.placeholder = @"Type here...";
+    accessoryView.userInteractionEnabled = YES;
 
     //OK and Cancel button
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped:)];
