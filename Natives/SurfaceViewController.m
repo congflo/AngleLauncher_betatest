@@ -198,7 +198,7 @@ static GameSurfaceView* pojavWindow;
     self.inputTextField.backgroundColor = UIColor.secondarySystemBackgroundColor;
     self.inputTextField.delegate = self;
     self.inputTextField.font = [UIFont fontWithName:@"Menlo-Regular" size:20];
-    self.inputTextField.clearsOnBeginEditing = YES;
+    self.inputTextField.clearsOnBeginEditing = NO;
     self. inputTextField.textAlignment = NSTextAlignmentCenter;
 
     self.inputTextField.sendChar = ^(jchar keychar){
@@ -275,12 +275,9 @@ static GameSurfaceView* pojavWindow;
     toolbar.barStyle = UIBarStyleDefault;
 
     //AccessoryView
-    UITextField *accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+    UITextField *accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 30)];
     accessoryView.borderStyle = UITextBorderStyleRoundedRect;
-    accessoryView.enabled = NO; //Không cho phép nhập vào đây
-
-    //[toolbar addSubview:accessoryView];
-
+    accessoryView.enabled = YES; //Cho phép nhập vào đây
 
     //OK and Cancel button
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped:)];
@@ -289,9 +286,7 @@ static GameSurfaceView* pojavWindow;
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTapped:)];
     toolbar.items = @[cancelButton];
 
-    //[toolbar addSubview:doneButton];
-    //[toolbar addSubview:cancelButton];
-    [toolbar setItems:@[cancelButton, [[UIBarButtonItem alloc] initWithCustomView:accessoryView], doneButton]];
+    [toolbar setItems:@[[[UIBarButtonItem alloc] initWithCustomView:accessoryView], doneButton, cancelButton]];
     self.inputTextField.inputAccessoryView = toolbar;
     self.inputTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
