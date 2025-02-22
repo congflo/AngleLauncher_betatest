@@ -270,19 +270,28 @@ static GameSurfaceView* pojavWindow;
 
     [self.rootView addSubview:self.inputTextField];
 
-//OK and Cancel button
-    UIButton *okButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [okButton setTitle:@"OK" forState:UIControlStateNormal];
-    [okButton addTarget:self action:@selector(okButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    //Toolbar for keyb
+    UIToolBar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    toolbar.barStyle = UIBarStyleDefault;
 
-    UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [cancelButton setTitle:@"Huỷ" forState:UIControlStateNormal];
-    [cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    //AccessoryView
+    UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
 
-    [self.rootView addSubview:okButton];
-    [self.rootView addSubview:cancelButton];
-    //self.inputTextField.inputAccessoryView = accessoryView;
-    self.rootView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+
+    //OK and Cancel button
+    UIBarButtonItem *doneButton = [UIBarButtonItem initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonTapped:)];
+
+    toolbar.items = @[doneButton];
+
+    UIBarButtonItem *cancelButton = [UIBarButton buttonWithType:UIBarButtonItemStyleCancel target:self action:@selector(cancelButtonTapped:)];
+    toolbar.items = @[cancelButton];
+
+    [toolbar addSubview:accessoryView];
+    //[toolbar addSubview:doneButton];
+    //[toolbar addSubview:cancelButton];
+
+    self.inputTextField.inputAccessoryView = toolbar;
+    self.inputTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     [self performSelector:@selector(initCategory_LogView)];
 
@@ -300,11 +309,11 @@ static GameSurfaceView* pojavWindow;
 }
 
 //OK and Cancel button
-- (void)okButtonTapped:(UIButton *)button {
+- (void)doneButtonTapped:(UIBarButtonItem *)button {
     [self.inputTextField resignFirstResponder];
 }
 
-- (void)cancelButtonTapped:(UIButton *)button {
+- (void)cancelButtonTapped:(UIBarButtonItem *)button {
     self.inputTextField.text = @"";
     [self.inputTextField resignFirstResponder];
 }
@@ -592,7 +601,7 @@ static GameSurfaceView* pojavWindow;
         } else {
             [self.inputTextField becomeFirstResponder];
             // Insert an undeletable space
-            self.inputTextField.text = @" ";
+            self.inputTextField.text = @"";
         }
     }
 }
@@ -883,7 +892,7 @@ static GameSurfaceView* pojavWindow;
                         } else {
                             [self.inputTextField becomeFirstResponder];
                             // Insert an undeletable space
-                            self.inputTextField.text = @" ";
+                            self.inputTextField.text = @"";
                         }
                     }
                     break;
