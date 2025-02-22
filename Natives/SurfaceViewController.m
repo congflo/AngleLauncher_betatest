@@ -281,11 +281,10 @@ static GameSurfaceView* pojavWindow;
 
 
     //OK and Cancel button
-    UIBarButtonItem *doneButton = [UIBarButtonItem initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonTapped:)];
-
+    UIBarButtonItem *doneButton = [UIBarButtonItem initWithTBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped:)];
     toolbar.items = @[doneButton];
 
-    UIBarButtonItem *cancelButton = [UIBarButtonItem initWithType:UIBarButtonItemStyleCancel target:self action:@selector(cancelButtonTapped:)];
+    UIBarButtonItem *cancelButton = [UIBarButtonItem initWithTBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTapped:)];
     toolbar.items = @[cancelButton];
 
     //[toolbar addSubview:doneButton];
