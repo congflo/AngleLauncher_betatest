@@ -125,9 +125,6 @@ jobs:
             # Build ipa and tipa for iOS
             gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }}
             gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }} TROLLSTORE_JIT_ENT=1
-          elif [ "${{ matrix.platform_name }}" == "tvos" ]; then
-            # Build tipa only for tvOS
-            gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }} TROLLSTORE_JIT_ENT=1
           else
             # Build ipa only for everything else
             gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }}
@@ -136,26 +133,26 @@ jobs:
       - name: Upload regular ipa
         uses: actions/upload-artifact@main
         with:
-          name: net.congcq.anglelauncher-${{ matrix.platform_name }}.ipa
-          path: artifacts/net.congcq.anglelauncher-*-${{ matrix.platform_name }}.ipa
+          name: AngleLauncher-${{ matrix.platform_name }}.ipa
+          path: artifacts/AngleLauncher-v*-${{ matrix.platform_name }}.ipa
 
       - name: Upload regular tipa
         uses: actions/upload-artifact@main
         with:
-          name: net.congcq.anglelauncher-${{ matrix.platform_name }}-trollstore.tipa
-          path: artifacts/net.congcq.anglelauncher-*-${{ matrix.platform_name }}-trollstore.tipa
+          name: AngleLauncher-${{ matrix.platform_name }}-trollstore.tipa
+          path: artifacts/AngleLauncher-v*-${{ matrix.platform_name }}-trollstore.tipa
 
       - name: Upload slimmed ipa
         uses: actions/upload-artifact@main
         with:
-          name: net.congcq.anglelauncher.slimmed-${{ matrix.platform_name }}.ipa
-          path: artifacts/net.congcq.anglelauncher.slimmed-*-${{ matrix.platform_name }}.ipa
+          name: AngleLauncher-no-runtime-${{ matrix.platform_name }}.ipa
+          path: artifacts/AngleLauncher-no-runtime-v*-${{ matrix.platform_name }}.ipa
 
       - name: Upload slimmed tipa
         uses: actions/upload-artifact@main
         with:
-          name: net.congcq.anglelauncher.slimmed-${{ matrix.platform_name }}-trollstore.tipa
-          path: artifacts/net.congcq.anglelauncher.slimmed-*-${{ matrix.platform_name }}-trollstore.tipa
+          name: AngleLauncher-no-runtime-${{ matrix.platform_name }}-trollstore.tipa
+          path: artifacts/AngleLauncher-no-runtime-v*-${{ matrix.platform_name }}-trollstore.tipa
 
       - name: Upload AngleLauncher.dSYM
         uses: actions/upload-artifact@main
