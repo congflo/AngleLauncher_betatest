@@ -12,6 +12,7 @@ CGRect virtualMouseFrame;
 CGPoint lastVirtualMousePoint;
 
 @interface SurfaceViewController : UIViewController
+@interface UIToolbar : UIView
 
 @property(nonatomic) ControlLayout *ctrlView;
 @property(nonatomic) GameSurfaceView* surfaceView;

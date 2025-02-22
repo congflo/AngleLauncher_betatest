@@ -271,7 +271,7 @@ static GameSurfaceView* pojavWindow;
     [self.rootView addSubview:self.inputTextField];
 
     //Toolbar for keyb
-    UIToolBar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     toolbar.barStyle = UIBarStyleDefault;
 
     //AccessoryView
