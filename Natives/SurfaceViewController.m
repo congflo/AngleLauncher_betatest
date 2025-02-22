@@ -320,7 +320,7 @@ static GameSurfaceView* pojavWindow;
 }
 
 - (void)cancelButtonTapped:(UIBarButtonItem *)button {
-    textField.text = @"";
+    UITextField.text = @"";
     [self.view endEditing:YES];
 }
 
