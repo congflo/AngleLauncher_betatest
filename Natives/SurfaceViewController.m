@@ -888,12 +888,12 @@ static GameSurfaceView* pojavWindow;
                 case SPECIALBTN_KEYBOARD:
                     if (held == 0) {
                         if (self.inputTextField.isFirstResponder) {
-                            [self.inputTextField resignFirstResponder];
-                            self.inputTextField.alpha = 1.0f;
+                            [accessoryView resignFirstResponder];
+                            self.accessoryView.alpha = 1.0f;
                         } else {
                             [self.inputTextField becomeFirstResponder];
                             // Insert an undeletable space
-                            self.inputTextField.text = @"";
+                            accessoryView.text = @"";
                         }
                     }
                     break;
