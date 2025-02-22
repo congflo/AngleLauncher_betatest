@@ -894,7 +894,7 @@ static GameSurfaceView* pojavWindow;
 - (void)textFielDidBeginEditing:(UITextField *)textField {
 
     if (textField == self.inputTextField) {
-        [self.inputTextField setInputAccessoryView:accessoryView];
+        [self.inputTextField setInputAccessoryView:self.accessoryView];
         [textField becomeFirstResponder];
     }
 }
