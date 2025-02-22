@@ -11,22 +11,19 @@ dispatch_group_t fatalExitGroup;
 CGRect virtualMouseFrame;
 CGPoint lastVirtualMousePoint;
 
-@interface UIToolbar : UIView
-
-@property (readonly, retain) UIView *inputView;
-@property (readonly, retain) UIView *inputAccessoryView;
-
-@end
 
 @interface SurfaceViewController : UIViewController
 
 @property(nonatomic) ControlLayout *ctrlView;
-@property(nonatomic) GameSurfaceView* surfaceView;
+@property(nonatomic) GameSurfaceView *surfaceView;
 @property(nonatomic) UIView *touchView;
-@property UIImageView* mousePointerView;
-@property(nonatomic) UIPanGestureRecognizer* scrollPanGesture;
+@property UIImageView *mousePointerView;
+@property(nonatomic) UIPanGestureRecognizer *scrollPanGesture;
 
-@property(nonatomic) UIView* rootView;
+@property(nonatomic) UIView *rootView;
+@property (readonly, retain) UIView *inputView;
+@property (readonly, retain) UIView *inputAccessoryView;
+
 
 - (instancetype)initWithMetadata:(NSDictionary *)metadata;
 - (void)sendTouchPoint:(CGPoint)location withEvent:(int)event;
