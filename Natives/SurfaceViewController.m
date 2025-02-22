@@ -275,9 +275,11 @@ static GameSurfaceView* pojavWindow;
     toolbar.barStyle = UIBarStyleDefault;
 
     //AccessoryView
-    UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+    UITextField *accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+    accessoryView.borderStyle = UITextBorderStyleRoundedRect;
+    accessoryView.enabled = NO; //Không cho phép nhập vào đây
 
-    [toolbar addSubview:accessoryView];
+    //[toolbar addSubview:accessoryView];
 
 
     //OK and Cancel button
@@ -289,8 +291,8 @@ static GameSurfaceView* pojavWindow;
 
     //[toolbar addSubview:doneButton];
     //[toolbar addSubview:cancelButton];
-
-    self.rootView.inputAccessoryView = toolbar;
+    [toolbar setItems:@[cancelButton, [[UIBarButtonItem alloc] initWithCustomView:accessoryView], doneButton]];
+    self.inputTextField.inputAccessoryView = toolbar;
     self.inputTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
     [self performSelector:@selector(initCategory_LogView)];
