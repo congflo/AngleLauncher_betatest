@@ -275,7 +275,7 @@ static GameSurfaceView* pojavWindow;
     toolbar.barStyle = UIBarStyleDefault;
 
     //AccessoryView
-    UITextField *accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 30)];
+    UITextField *accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
     accessoryView.borderStyle = UITextBorderStyleRoundedRect;
     accessoryView.enabled = YES; //Cho phép nhập vào đây
 
