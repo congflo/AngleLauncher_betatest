@@ -194,7 +194,7 @@ static GameSurfaceView* pojavWindow;
     self.mousePointerView.userInteractionEnabled = NO;
     [self.touchView addSubview:self.mousePointerView];
 
-    self.inputTextField = [[TrackedTextField alloc] initWithFrame:CGRectMake(0, 0, toolbar.bounds.size.width - 100, 30)];
+    self.inputTextField = [[TrackedTextField alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 100, 30)];
     self.accessoryView.borderStyle = UITextBorderStyleRoundedRect;
     self.accessoryView.placeholder = @"Type here...";
     self.inputTextField.backgroundColor = UIColor.secondarySystemBackgroundColor;
@@ -275,7 +275,7 @@ static GameSurfaceView* pojavWindow;
     //Toolbar for keyb
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 100, 30)];
     toolbar.barStyle = UIBarStyleDefault;
-    [toolbar addSubview:inputTextField];
+    [toolbar addSubview:self.inputTextField];
 
     //AccessoryView
     self.accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
@@ -291,7 +291,7 @@ static GameSurfaceView* pojavWindow;
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTapped:)];
     toolbar.items = @[cancelButton];
 
-    [toolbar setItems:@[doneButton, cancelButton];
+    [toolbar setItems:@[doneButton, cancelButton]];
     self.inputTextField.inputAccessoryView = toolbar;
     self.inputTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
