@@ -280,7 +280,7 @@ static GameSurfaceView* pojavWindow;
     self.accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
     self.accessoryView.borderStyle = UITextBorderStyleRoundedRect;
     self.accessoryView.placeholder = @"Type here...";
-    self.accessoryView.autoresizingMask = UIViewAutoresizingFlexibleWidth
+    self.accessoryView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.accessoryView.userInteractionEnabled = YES;
 
     //Done and Cancel button
