@@ -280,6 +280,7 @@ static GameSurfaceView* pojavWindow;
     self.accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
     self.accessoryView.borderStyle = UITextBorderStyleRoundedRect;
     self.accessoryView.placeholder = @"Type here...";
+    self.accessoryView.autoresizingMask = UIViewAutoresizingFlexibleWidth
     self.accessoryView.userInteractionEnabled = YES;
 
     //Done and Cancel button
@@ -289,7 +290,7 @@ static GameSurfaceView* pojavWindow;
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTapped:)];
     toolbar.items = @[cancelButton];
 
-    [toolbar setItems:@[[[UIBarButtonItem alloc] initWithCustomView:self.inputTextField], doneButton, cancelButton]];
+    [toolbar setItems:@[[[UIBarButtonItem alloc] initWithCustomView:self.accessoryView], doneButton, cancelButton]];
     self.inputTextField.inputAccessoryView = toolbar;
     self.inputTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
