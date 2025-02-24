@@ -312,7 +312,7 @@ static GameSurfaceView* pojavWindow;
 
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
 
-    [pasteboard setString:text];
+    [pasteboard setString:self.accessoryView.text];
 
     [self.inputTextField paste:self];
 
