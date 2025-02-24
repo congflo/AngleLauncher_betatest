@@ -271,11 +271,14 @@ static GameSurfaceView* pojavWindow;
     [self.rootView addSubview:self.inputTextField];
 
     //Toolbar for keyb
-    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 100, 30)];
+    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 100, 43)];
     toolbar.barStyle = UIBarStyleDefault;
 
     //AccessoryView
-    self.accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 100, 42)];
+    self.accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 200, 30)];
+    self.accessoryView.delegate = self;
+    [self.accessoryView setReturnKeyType:UIReturnKeyDone];
+
     self.accessoryView.borderStyle = UITextBorderStyleRoundedRect;
     self.accessoryView.placeholder = @"Type here...";
     self.accessoryView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -305,6 +308,23 @@ static GameSurfaceView* pojavWindow;
     }
 
     [self launchMinecraft];
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+
+    UIPasteboard *congchu = [UIPasteboard generalPasteboard];
+
+    [congchu setString:self.accessoryView.text];
+
+    [self.inputTextField paste:self];
+    return YES;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if ([string isEqualToString:@""]) {
+        [self.accessoryView deleteBackward];
+        [self.inputTextField deleteBackward];
+    }
+    return YES;
 }
 
 //Done and Cancel button
