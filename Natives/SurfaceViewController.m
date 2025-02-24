@@ -194,7 +194,7 @@ static GameSurfaceView* pojavWindow;
     self.mousePointerView.userInteractionEnabled = NO;
     [self.touchView addSubview:self.mousePointerView];
 
-    self.inputTextField = [[TrackedTextField alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 100, 30)];
+    self.inputTextField = [[TrackedTextField alloc] initWithFrame:CGRectMake(0, -32, self.view.bounds.size.width - 100, 30)];
     self.inputTextField.backgroundColor = UIColor.secondarySystemBackgroundColor;
     self.inputTextField.delegate = self;
     self.inputTextField.font = [UIFont fontWithName:@"Menlo-Regular" size:20];
@@ -275,14 +275,14 @@ static GameSurfaceView* pojavWindow;
     toolbar.barStyle = UIBarStyleDefault;
 
     //AccessoryView
-    self.accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 200, 30)];
+    self.accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 150, 30)];
     self.accessoryView.delegate = self;
     [self.accessoryView setReturnKeyType:UIReturnKeyDone];
 
     self.accessoryView.borderStyle = UITextBorderStyleRoundedRect;
     self.accessoryView.placeholder = @"Type here...";
     self.accessoryView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    self.accessoryView.clearsOnBeginEditing = YES;
+
     
     //Done and Cancel button
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped:)];
@@ -311,10 +311,9 @@ static GameSurfaceView* pojavWindow;
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if ([string isEqualToString:@""]) {
-        [self.accessoryView deleteBackward];
-        [self.inputTextField deleteBackward];
-    }
+    //hmm... chắc là ổn rồi đấy, mong là đừng dính bug nữa ;-;
+    [self.accessoryView deleteBackward];
+    [self.inputTextField deleteBackward];
     return YES;
 }
 
@@ -327,9 +326,15 @@ static GameSurfaceView* pojavWindow;
 
     [self.inputTextField paste:self];
 
+    CallbackBridge_nativeSendKey(GLFW_KEY_ENTER, 0, 1, 0);
+    CallbackBridge_nativeSendKey(GLFW_KEY_ENTER, 0, 0, 0);
+
+    self.accessoryView.text = @"";
+
     [self.view endEditing:YES];
 
     [self.inputTextField resignFirstResponder];
+
 }
 
 - (void)cancelButtonTapped:(UIBarButtonItem *)button {
@@ -627,7 +632,7 @@ static GameSurfaceView* pojavWindow;
         } else {
             [self.inputTextField becomeFirstResponder];
             // Insert an undeletable space
-            self.inputTextField.text = @"";
+            self.inputTextField.text = @" ";
         }
     }
 }
@@ -901,7 +906,6 @@ static GameSurfaceView* pojavWindow;
     [congchu setString:self.accessoryView.text];
 
     [self.inputTextField paste:self];
-    return YES;
     CallbackBridge_nativeSendKey(GLFW_KEY_ENTER, 0, 1, 0);
     CallbackBridge_nativeSendKey(GLFW_KEY_ENTER, 0, 0, 0);
     textField.text = @"";
@@ -926,6 +930,7 @@ static GameSurfaceView* pojavWindow;
                             self.inputTextField.alpha = 1.0f;
                         } else {
                             [self.inputTextField becomeFirstResponder];
+                            self.inputTextField.text = @" ";
                             if (self.inputTextField.isFirstResponder) {
                                 [self.accessoryView becomeFirstResponder];
                             }
