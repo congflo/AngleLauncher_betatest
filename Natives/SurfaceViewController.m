@@ -313,7 +313,6 @@ static GameSurfaceView* pojavWindow;
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     //không fix được cái bug này rồi... thôi để kiếm cách dùng accessoryView khác tối ưu hơn cách này vậy
     if ([string isEqualToString:@""]) {
-        [self.accessoryView deleteBackward];
         [self.inputTextField deleteBackward];
     }
     return YES;
