@@ -195,12 +195,10 @@ static GameSurfaceView* pojavWindow;
     [self.touchView addSubview:self.mousePointerView];
 
     self.inputTextField = [[TrackedTextField alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 100, 30)];
-    self.accessoryView.borderStyle = UITextBorderStyleRoundedRect;
-    self.accessoryView.placeholder = @"Type here...";
     self.inputTextField.backgroundColor = UIColor.secondarySystemBackgroundColor;
     self.inputTextField.delegate = self;
     self.inputTextField.font = [UIFont fontWithName:@"Menlo-Regular" size:20];
-    self.inputTextField.clearsOnBeginEditing = NO;
+    self.inputTextField.clearsOnBeginEditing = YES;
     self.inputTextField.textAlignment = NSTextAlignmentCenter;
 
     self.inputTextField.sendChar = ^(jchar keychar){
@@ -275,7 +273,6 @@ static GameSurfaceView* pojavWindow;
     //Toolbar for keyb
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 100, 30)];
     toolbar.barStyle = UIBarStyleDefault;
-    [toolbar addSubview:self.accessoryView];
 
     //AccessoryView
     self.accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
@@ -283,7 +280,7 @@ static GameSurfaceView* pojavWindow;
     self.accessoryView.placeholder = @"Type here...";
     self.accessoryView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.accessoryView.userInteractionEnabled = YES;
-
+    self.inputTextField.userInteractionEnabled = NO;
     //Done and Cancel button
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped:)];
     toolbar.items = @[doneButton];
@@ -291,7 +288,7 @@ static GameSurfaceView* pojavWindow;
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTapped:)];
     toolbar.items = @[cancelButton];
 
-    [toolbar setItems:@[doneButton, cancelButton]];
+    [toolbar setItems:@[[[UIBarButtonItem alloc] initWithCustomView:self.accessoryView], doneButton, cancelButton]];
     self.inputTextField.inputAccessoryView = toolbar;
     self.inputTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
