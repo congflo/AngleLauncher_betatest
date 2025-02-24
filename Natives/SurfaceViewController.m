@@ -275,7 +275,7 @@ static GameSurfaceView* pojavWindow;
     //Toolbar for keyb
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 100, 30)];
     toolbar.barStyle = UIBarStyleDefault;
-    [toolbar addSubview:self.inputTextField];
+    [toolbar addSubview:self.accessoryView];
 
     //AccessoryView
     self.accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
@@ -312,12 +312,17 @@ static GameSurfaceView* pojavWindow;
 
 //Done and Cancel button
 - (void)doneButtonTapped:(UIBarButtonItem *)button {
+    [self.inputTextField insertText:self.accessoryView.text];
     [self.view endEditing:YES];
+    [self.inputTextField resignFirstResponder];
 }
 
 - (void)cancelButtonTapped:(UIBarButtonItem *)button {
+    [self.inputTextField insertText:self.accessoryView.text];
     self.inputTextField.text = @"";
     [self.view endEditing:YES];
+    [self.inputTextField resignFirstResponder];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
