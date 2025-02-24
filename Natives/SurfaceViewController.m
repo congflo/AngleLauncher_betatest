@@ -309,15 +309,6 @@ static GameSurfaceView* pojavWindow;
 
     [self launchMinecraft];
 }
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-
-    UIPasteboard *congchu = [UIPasteboard generalPasteboard];
-
-    [congchu setString:self.accessoryView.text];
-
-    [self.inputTextField paste:self];
-    return YES;
-}
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if ([string isEqualToString:@""]) {
@@ -905,6 +896,12 @@ static GameSurfaceView* pojavWindow;
 #pragma mark - Input view stuff
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    UIPasteboard *congchu = [UIPasteboard generalPasteboard];
+
+    [congchu setString:self.accessoryView.text];
+
+    [self.inputTextField paste:self];
+    return YES;
     CallbackBridge_nativeSendKey(GLFW_KEY_ENTER, 0, 1, 0);
     CallbackBridge_nativeSendKey(GLFW_KEY_ENTER, 0, 0, 0);
     textField.text = @"";
