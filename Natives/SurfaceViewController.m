@@ -280,7 +280,7 @@ static GameSurfaceView* pojavWindow;
     self.accessoryView.placeholder = @"Type here...";
     self.accessoryView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.accessoryView.userInteractionEnabled = YES;
-    self.inputTextField.userInteractionEnabled = NO;
+    
     //Done and Cancel button
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped:)];
     toolbar.items = @[doneButton];
