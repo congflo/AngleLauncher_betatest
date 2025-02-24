@@ -275,11 +275,11 @@ static GameSurfaceView* pojavWindow;
     toolbar.barStyle = UIBarStyleDefault;
 
     //AccessoryView
-    self.accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    self.accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 100, 42)];
     self.accessoryView.borderStyle = UITextBorderStyleRoundedRect;
     self.accessoryView.placeholder = @"Type here...";
     self.accessoryView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    self.accessoryView.userInteractionEnabled = YES;
+    self.accessoryView.clearsOnBeginEditing = YES;
     
     //Done and Cancel button
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped:)];
@@ -309,15 +309,26 @@ static GameSurfaceView* pojavWindow;
 
 //Done and Cancel button
 - (void)doneButtonTapped:(UIBarButtonItem *)button {
-    [self.inputTextField insertText:self.accessoryView.text];
+
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+
+    [pasteboard setString:text];
+
+    [self.inputTextField paste:self];
+
     [self.view endEditing:YES];
+
     [self.inputTextField resignFirstResponder];
 }
 
 - (void)cancelButtonTapped:(UIBarButtonItem *)button {
+
     [self.inputTextField insertText:self.accessoryView.text];
+
     self.inputTextField.text = @"";
+
     [self.view endEditing:YES];
+
     [self.inputTextField resignFirstResponder];
 
 }
@@ -893,12 +904,14 @@ static GameSurfaceView* pojavWindow;
                 case SPECIALBTN_KEYBOARD:
                     if (held == 0) {
                         if (self.inputTextField.isFirstResponder) {
+                            [self.accessoryView resignFirstResponder];
                             [self.inputTextField resignFirstResponder];
                             self.inputTextField.alpha = 1.0f;
                         } else {
                             [self.inputTextField becomeFirstResponder];
-                            // Insert an undeletable space
-                            self.inputTextField.text = @"";
+                            if (self.inputTextField.isFirstResponder) {
+                                [self.accessoryView becomeFirstResponder];
+                            }
                         }
                     }
                     break;
