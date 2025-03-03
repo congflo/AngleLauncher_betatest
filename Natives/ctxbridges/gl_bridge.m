@@ -11,7 +11,7 @@ static EGLDisplay g_EglDisplay;
 static egl_library handle;
 
 void dlsym_EGL() {
-    void* dl_handle = dlopen("@rpath/tinygl4es.dylib", RTLD_GLOBAL);
+    void* dl_handle = dlopen("@rpath/libtinygl4es.dylib", RTLD_GLOBAL);
     assert(dl_handle);
     handle.eglBindAPI = dlsym(dl_handle, "eglBindAPI");
     handle.eglChooseConfig = dlsym(dl_handle, "eglChooseConfig");
