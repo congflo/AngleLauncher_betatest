@@ -11,7 +11,7 @@ static EGLDisplay g_EglDisplay;
 static egl_library handle;
 
 void dlsym_EGL() {
-    void* dl_handle = dlopen("@rpath/libtinygl4angle.dylib", RTLD_GLOBAL);
+    void* dl_handle = dlopen("@rpath/MetalANGLE.framework/MetalANGLE", RTLD_GLOBAL);
     assert(dl_handle);
     handle.eglBindAPI = dlsym(dl_handle, "eglBindAPI");
     handle.eglChooseConfig = dlsym(dl_handle, "eglChooseConfig");
@@ -21,9 +21,9 @@ void dlsym_EGL() {
     handle.eglDestroySurface = dlsym(dl_handle, "eglDestroySurface");
     handle.eglGetConfigAttrib = dlsym(dl_handle, "eglGetConfigAttrib");
     handle.eglGetCurrentContext = dlsym(dl_handle, "eglGetCurrentContext");
-    handle.eglGetDisplay = dlsym(dl_handle, "eglGetDisplay");
+    //handle.eglGetDisplay = dlsym(dl_handle, "eglGetDisplay");
     handle.eglGetError = dlsym(dl_handle, "eglGetError");
-    handle.eglGetPlatformDisplay = dlsym(dl_handle, "eglGetPlatformDisplay");
+    //handle.eglGetPlatformDisplay = dlsym(dl_handle, "eglGetPlatformDisplay");
     handle.eglInitialize = dlsym(dl_handle, "eglInitialize");
     handle.eglMakeCurrent = dlsym(dl_handle, "eglMakeCurrent");
     handle.eglSwapBuffers = dlsym(dl_handle, "eglSwapBuffers");

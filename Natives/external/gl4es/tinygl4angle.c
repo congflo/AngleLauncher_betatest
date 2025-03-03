@@ -18,11 +18,11 @@
 
 #define AliasDecl(NAME, EXT) \
     asm(".global _"# NAME "\n_" #NAME ": b _" #NAME #EXT);
-
+/*
 // Core OpenGL 2.0
 AliasDecl(glGetTexImage, ANGLE)
 AliasDecl(glMapBuffer, OES)
-
+*:
 // GL_KHR_debug
 AliasDecl(glDebugMessageCallback, KHR)
 AliasDecl(glDebugMessageControl, KHR)
@@ -32,11 +32,11 @@ AliasDecl(glGetObjectLabel, KHR)
 AliasDecl(glObjectLabel, KHR)
 AliasDecl(glPopDebugGroup, KHR)
 AliasDecl(glPushDebugGroup, KHR)
-
+/*
 // GL_EXT_blend_func_extended
 AliasDecl(glBindFragDataLocation, EXT)
 AliasDecl(glBindFragDataLocationIndexed, EXT)
-
+*/
 int proxy_width, proxy_height, proxy_intformat, maxTextureSize;
 
 void(*gles_glCopyTexSubImage2D)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height);
