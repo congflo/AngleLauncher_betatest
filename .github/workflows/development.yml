@@ -133,26 +133,26 @@ jobs:
       - name: Upload ipa
         uses: actions/upload-artifact@main
         with:
-          name: AngleLauncher-${{ matrix.platform_name }}.ipa
-          path: artifacts/AngleLauncher-*-${{ matrix.platform_name }}.ipa
+          name: AngleLauncher-${{ matrix.platform_name }}
+          path: artifacts/app-debug-*-${{ matrix.platform_name }}.ipa
 
       - name: Upload tipa
         uses: actions/upload-artifact@main
         with:
-          name: AngleLauncher-${{ matrix.platform_name }}-trollstore.tipa
-          path: artifacts/AngleLauncher-*-${{ matrix.platform_name }}-trollstore.tipa
+          name: AngleLauncher-${{ matrix.platform_name }}-trollstore
+          path: artifacts/app-debug-*-${{ matrix.platform_name }}-trollstore.tipa
 
       - name: Upload no-runtime ipa
         uses: actions/upload-artifact@main
         with:
-          name: AngleLauncher-no-runtime-${{ matrix.platform_name }}.ipa
-          path: artifacts/AngleLauncher-no-runtime-*-${{ matrix.platform_name }}.ipa
+          name: AngleLauncher-no-runtime-${{ matrix.platform_name }}
+          path: artifacts/no-runtime-*-${{ matrix.platform_name }}.ipa
 
       - name: Upload no-runtime tipa
         uses: actions/upload-artifact@main
         with:
-          name: AngleLauncher-no-runtime-${{ matrix.platform_name }}-trollstore.tipa
-          path: artifacts/AngleLauncher-no-runtime-*-${{ matrix.platform_name }}-trollstore.tipa
+          name: AngleLauncher-no-runtime-${{ matrix.platform_name }}-trollstore
+          path: artifacts/no-runtime-*-${{ matrix.platform_name }}-trollstore.tipa
 
       - name: Upload AngleLauncher.dSYM
         uses: actions/upload-artifact@main
