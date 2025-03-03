@@ -19,6 +19,10 @@
 + (Class)layerClass {
     if ([[PLProfiles resolveKeyForCurrentProfile:@"renderer"] hasPrefix:@"libOSMesa"]) {
         return CALayer.class;
+    // I'll try it
+    } elif ([[PLProfiles resolveKeyForCurrentProfile:@"renderer"] hasPrefix:@"libvirgl"]) {
+        return CALayer.class;
+
     } else {
         return CAMetalLayer.class;
     }

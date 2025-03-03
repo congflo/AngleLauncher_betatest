@@ -139,7 +139,8 @@ NSArray* getRendererKeys(BOOL containsDefault) {
     NSMutableArray *array = @[
         @"auto",
         @ RENDERER_NAME_GL4ES,
-        @ RENDERER_NAME_MTL_ANGLE
+        @ RENDERER_NAME_MTL_ANGLE,
+        @ RENDERER_NAME_VIRGL
     ].mutableCopy;
 
     if (containsDefault) {
@@ -169,6 +170,7 @@ NSArray* getRendererNames(BOOL containsDefault) {
 
 localize(@"preference.title.renderer.release.gl4es", nil),
             localize(@"preference.title.renderer.release.angle", nil),
+            localize(@"preference.title.renderer.release.virgl", nil),
             localize(@"preference.title.renderer.release.zink", nil)
         ].mutableCopy;
     } else {
@@ -177,6 +179,7 @@ localize(@"preference.title.renderer.release.gl4es", nil),
             localize(@"preference.title.renderer.debug.auto", nil),
             localize(@"preference.title.renderer.debug.gl4es", nil),
             localize(@"preference.title.renderer.debug.angle", nil),
+            localize(@"preference.title.renderer.debug.virgl", nil),
             localize(@"preference.title.renderer.debug.zink", nil)
         ].mutableCopy;
 #if CONFIG_RELEASE
