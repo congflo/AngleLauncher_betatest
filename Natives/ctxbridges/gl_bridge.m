@@ -21,9 +21,9 @@ void dlsym_EGL() {
     handle.eglDestroySurface = dlsym(dl_handle, "eglDestroySurface");
     handle.eglGetConfigAttrib = dlsym(dl_handle, "eglGetConfigAttrib");
     handle.eglGetCurrentContext = dlsym(dl_handle, "eglGetCurrentContext");
-    //handle.eglGetDisplay = dlsym(dl_handle, "eglGetDisplay");
+    handle.eglGetDisplay = dlsym(dl_handle, "eglGetDisplay");
     handle.eglGetError = dlsym(dl_handle, "eglGetError");
-    //handle.eglGetPlatformDisplay = dlsym(dl_handle, "eglGetPlatformDisplay");
+    handle.eglGetPlatformDisplay = dlsym(dl_handle, "eglGetPlatformDisplay");
     handle.eglInitialize = dlsym(dl_handle, "eglInitialize");
     handle.eglMakeCurrent = dlsym(dl_handle, "eglMakeCurrent");
     handle.eglSwapBuffers = dlsym(dl_handle, "eglSwapBuffers");
