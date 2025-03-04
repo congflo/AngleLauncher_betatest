@@ -20,7 +20,7 @@
     if ([[PLProfiles resolveKeyForCurrentProfile:@"renderer"] hasPrefix:@"libOSMesa"]) {
         return CALayer.class;
     // I'll try it
-    } else if ([[PLProfiles resolveKeyForCurrentProfile:@"renderer"] hasPrefix:@"libvirgl"]) {
+    } else if ([[PLProfiles resolveKeyForCurrentProfile:@"renderer"] hasPrefix:@"libgl4es"]) {
         return CALayer.class;
 
     } else {
