@@ -55,7 +55,7 @@ int pojavInitOpenGL() {
         // At this point, if renderer is still auto (unspecified major version), pick gl4es
         renderer = @ RENDERER_NAME_GL4ES;
         setenv("POJAV_RENDERER", renderer.UTF8String, 1);
-        set_gl_bridge_tbl();
+        set_osm_bridge_tbl();
     } else if ([renderer isEqualToString:@ RENDERER_NAME_MTL_ANGLE]) {
         set_gl_bridge_tbl();
     } else if ([renderer hasPrefix:@"libOSMesa"]) {
