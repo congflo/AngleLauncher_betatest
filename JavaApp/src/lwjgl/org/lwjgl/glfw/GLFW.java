@@ -12,7 +12,7 @@ import java.nio.*;
 
 import javax.annotation.*;
 
-import net.kdt.pojavlaunch.Tools;
+import net.congcq.anglelaunch.Tools;
 
 import org.lwjgl.*;
 import org.lwjgl.system.*;
@@ -1095,7 +1095,7 @@ public class GLFW
         if (mode == GLFW_CURSOR) {
             switch (value) {
                 case GLFW_CURSOR_DISABLED:
-                    net.kdt.pojavlaunch.uikit.UIKit.updateMCGuiScale();
+                    net.congcq.anglelaunch.uikit.UIKit.updateMCGuiScale();
                     CallbackBridge.nativeSetGrabbing(true);
                     break;
                 default: CallbackBridge.nativeSetGrabbing(false);
