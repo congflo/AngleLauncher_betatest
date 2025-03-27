@@ -45,7 +45,7 @@ public class AngleLauncher {
 		try {
 			// try to initialize Caciocavallo17
 			Class.forName("com.github.caciocavallosilano.cacio.ctc.CTCPreloadClassLoader");
-		} catch (ClassNotFoundExceptione) {}
+		} catch (ClassNotFoundException e) {}
 		
 		if (args[0].equals("-jar")) {
 			UIKit.callback_JavaGUIViewController_launchJarFile(args[1], Arrays.copyOfRange(args, 2, args.length));
