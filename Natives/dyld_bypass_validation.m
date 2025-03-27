@@ -118,7 +118,7 @@ void* hooked_mmap(void *addr, size_t len, int prot, int flags, int fd, off_t off
 
 int hooked___fcntl(int fildes, int cmd, void *param) {
     if (cmd == F_ADDFILESIGS_RETURN) {
-        const char *homeDir = getenv("POJAV_HOME");
+        const char *homeDir = getenv("ANGLE_HOME");
         char filePath[PATH_MAX];
         bzero(filePath, sizeof(filePath));
         

@@ -37,7 +37,7 @@ void showDialog(NSString* title, NSString* message) {
     });
 }
 
-JNIEXPORT void JNICALL Java_net_kdt_pojavlaunch_uikit_UIKit_showError(JNIEnv* env, jclass clazz, jstring title, jstring message, jboolean exitIfOk) {
+JNIEXPORT void JNICALL Java_net_congcq_anglelaunch_uikit_UIKit_showError(JNIEnv* env, jclass clazz, jstring title, jstring message, jboolean exitIfOk) {
     const char *title_c = (*env)->GetStringUTFChars(env, title, 0);
     const char *message_c = (*env)->GetStringUTFChars(env, message, 0);
     NSString *title_o = @(title_c);

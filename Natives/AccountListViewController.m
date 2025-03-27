@@ -27,7 +27,7 @@
     }
 
     // List accounts
-    NSString *listPath = [NSString stringWithFormat:@"%s/accounts", getenv("POJAV_HOME")];
+    NSString *listPath = [NSString stringWithFormat:@"%s/accounts", getenv("ANGLE_HOME")];
     NSFileManager *fm = [NSFileManager defaultManager];
     NSArray *files = [fm contentsOfDirectoryAtPath:listPath error:nil];
     for(NSString *file in files) {
@@ -106,7 +106,7 @@
 
         NSString *str = self.accountList[indexPath.row][@"username"];
         NSFileManager *fm = [NSFileManager defaultManager];
-        NSString *path = [NSString stringWithFormat:@"%s/accounts/%@.json", getenv("POJAV_HOME"), str];
+        NSString *path = [NSString stringWithFormat:@"%s/accounts/%@.json", getenv("ANGLE_HOME"), str];
         if (self.whenDelete != nil) {
             self.whenDelete(str);
         }

@@ -113,7 +113,7 @@ void CTCClipboard_nQuerySystemClipboard(JNIEnv *env, jclass clazz) {
         class_CTCClipboard = (*env)->NewGlobalRef(env, clazz);
         method_SystemClipboardDataReceived = (*env)->GetStaticMethodID(env, clazz, "systemClipboardDataReceived", "(Ljava/lang/String;Ljava/lang/String;)V");
     }
-    // From Java_net_kdt_pojavlaunch_AWTInputBridge_nativeClipboardReceived
+    // From Java_net_congcq_anglelaunch_AWTInputBridge_nativeClipboardReceived
     // Note: we cannot use main_queue here as it will cause deadlock
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         JNIEnv *env;
@@ -209,7 +209,7 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved) {
     JNIEnv *env;
     (*runtimeJavaVMPtr)->GetEnv(runtimeJavaVMPtr, (void **)&env, JNI_VERSION_1_4);
     registerOpenHandler(env);
-    if (!getenv("POJAV_SKIP_JNI_GLFW")) {
+    if (!getenv("ANGLE_SKIP_JNI_GLFW")) {
         runtimeJNIEnvPtr = env;
         JNI_OnLoadGLFW();
     }
@@ -382,7 +382,7 @@ int callback_SurfaceViewController_touchHotbar(CGFloat x, CGFloat y) {
     return hotbarKeys[(int) MathUtils_map(x, barX, barX + barWidth, 0, 9)];
 }
 
-JNIEXPORT void JNICALL Java_net_kdt_pojavlaunch_uikit_UIKit_updateMCGuiScale(JNIEnv* env, jclass clazz, jint scale) {
+JNIEXPORT void JNICALL Java_net_congcq_anglelaunch_uikit_UIKit_updateMCGuiScale(JNIEnv* env, jclass clazz, jint scale) {
     guiScale = scale;
 }
 

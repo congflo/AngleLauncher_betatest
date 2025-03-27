@@ -1,7 +1,7 @@
 package org.lwjgl.glfw;
 
 import java.util.*;
-import net.kdt.pojavlaunch.Tools;
+import net.congcq.anglelaunch.Tools;
 
 public class GLFWWindowProperties {
     public int width, height;
