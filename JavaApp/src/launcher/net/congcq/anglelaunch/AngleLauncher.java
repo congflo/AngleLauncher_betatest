@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.*;
 
-import org.lwjgl.glfw.CallbackBride;
+import org.lwjgl.glfw.CallbackBridge;
 import org.lwjgl.glfw.GLFW;
 
 import net.congcq.anglelaunch.uikit.*;
