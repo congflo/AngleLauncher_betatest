@@ -35,8 +35,8 @@ void init_loadDefaultEnv() {
     // Fix white color on banner and sheep, since GL4ES 1.1.5
     setenv("LIBGL_NORMALIZE", "1", 1);
 
-    // Override OpenGL version to 4.6 for Zink
-    setenv("MESA_GL_VERSION_OVERRIDE", "4.6", 1);
+    // Override OpenGL version to 4.3 for Zink
+    setenv("MESA_GL_VERSION_OVERRIDE", "4.3", 1);
 
     // Runs JVM in a separate thread
     setenv("HACK_IGNORE_START_ON_FIRST_THREAD", "1", 1);
