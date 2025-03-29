@@ -7,12 +7,7 @@ on:
 
 jobs:
   build:
-    name: Development build
-    strategy:
-      matrix:
-        include:
-          - platform: 2
-            platform_name: ios
+
 
     runs-on: macos-latest
     steps:
