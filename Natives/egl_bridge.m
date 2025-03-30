@@ -61,8 +61,8 @@ int pojavInitOpenGL() {
     } else if ([renderer hasPrefix:@"libOSMesa"]) {
         setenv("GALLIUM_DRIVER","zink",1);
         set_osm_bridge_tbl();
-    } else if ([renderer hasPrefix:@"libvirgl"]) {
-        setenv("ANGLE_RENDERER", renderer.UTF8String, 1);
+    } else if ([renderer hasPrefix:@"libvirgl_test_server"]) {
+        setenv("GALLIUM_DRIVER","virgl", 1);
         set_osm_bridge_tbl();
     }
     JNI_LWJGL_changeRenderer(renderer.UTF8String);
