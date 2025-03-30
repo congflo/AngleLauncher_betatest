@@ -17,9 +17,9 @@
 }
 
 + (Class)layerClass {
-if ([[PLProfiles resolveKeyForCurrentProfile:@"renderer"] hasPrefix:@"libOSMesa"] || [[PLProfiles resolveKeyForCurrentProfile:@"renderer"] hasPrefix:@"libvirgl"]) {
+    if ([[PLProfiles resolveKeyForCurrentProfile:@"renderer"] hasPrefix:@"libOSMesa"] || [[PLProfiles resolveKeyForCurrentProfile:@"renderer"] hasPrefix:@"libvirgl"]) {
     return CALayer.class;
-} else {
+    } else {
         return CAMetalLayer.class;
     }
 }

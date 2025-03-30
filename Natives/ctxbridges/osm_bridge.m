@@ -12,7 +12,7 @@
 static osmesa_library handle;
 
 void dlsym_OSMesa() {
-    void* dl_handle = dlopen([NSString stringWithFormat:@"@rpath/%s", getenv("ANGLE_RENDERER")].UTF8String, RTLD_GLOBAL);
+    void* dl_handle = dlopen([NSString stringWithFormat:@"@rpath/%s", getenv("ANGLE_RENDERER")].UTF8String, RTLD_LOCAL);
     assert(dl_handle);
     handle.OSMesaMakeCurrent = dlsym(dl_handle,"OSMesaMakeCurrent");
     handle.OSMesaGetCurrentContext = dlsym(dl_handle,"OSMesaGetCurrentContext");
