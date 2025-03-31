@@ -18,7 +18,7 @@
 
 + (Class)layerClass {
     if ([[PLProfiles resolveKeyForCurrentProfile:@"renderer"] hasPrefix:@"libOSMesa"] || [[PLProfiles resolveKeyForCurrentProfile:@"renderer"] hasPrefix:@"libvirgl_test_server"]) {
-        return CALayer.class;
+        return CAMetalLayer.class;
     } else {
         return CAMetalLayer.class;
     }

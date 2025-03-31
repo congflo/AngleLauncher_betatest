@@ -54,17 +54,16 @@ int pojavInitOpenGL() {
     if (isAuto || [renderer isEqualToString:@ RENDERER_NAME_GL4ES]) {
         // At this point, if renderer is still auto (unspecified major version), pick gl4es
         renderer = @ RENDERER_NAME_GL4ES;
-        setenv("ANGLE_RENDERER", renderer.UTF8String, 1);
-        set_gl_bridge_tbl();
+        setenv("ANGLE_RENDERER", renderer.UTF8String,1);
+        set_osm_bridge_tbl();
     } else if ([renderer isEqualToString:@ RENDERER_NAME_MTL_ANGLE]) {
-        setenv("ANGLE_RENDERER", renderer.UTF8String, 1);
         set_gl_bridge_tbl();
     } else if ([renderer hasPrefix:@"libOSMesa"]) {
         setenv("GALLIUM_DRIVER","zink",1);
         set_osm_bridge_tbl();
     } else if ([renderer hasPrefix:@"libvirgl_test_server"]) {
-        setenv("GALLIUM_DRIVER","zink",1);
-        set_osm_bridge_tbl();
+        setenv("ANGLE_RENDERER", renderer.UTF8String,1);
+        set_gl_bridge_tbl();
     }
     JNI_LWJGL_changeRenderer(renderer.UTF8String);
     // Preload renderer library
@@ -84,6 +83,9 @@ void pojavSetWindowHint(int hint, int value) {
                 setenv("ANGLE_RENDERER", RENDERER_NAME_GL4ES, 1);
                 JNI_LWJGL_changeRenderer(RENDERER_NAME_GL4ES);
                 break;
+            case 3:
+                setenv("ANGLE_RENDERER", RENDERER_NAME_VIRGL, 1);
+                JNI_LWJGL_changeRenderer(RENDERER_NAME_VIRGL);
             // case 4: use Zink?
             default:
                 setenv("ANGLE_RENDERER", RENDERER_NAME_MTL_ANGLE, 1);
