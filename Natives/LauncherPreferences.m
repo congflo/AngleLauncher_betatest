@@ -151,7 +151,6 @@ NSArray* getRendererKeys(BOOL containsDefault) {
         // Disabling Zink on iOS 16.0+ to figure out what's wrong with it
     } else {
 #endif
-        [array addObject:@RENDERER_NAME_VIRGL];
         [array addObject:@ RENDERER_NAME_VK_ZINK];
 #if CONFIG_RELEASE
     }
@@ -170,7 +169,6 @@ NSArray* getRendererNames(BOOL containsDefault) {
 
 localize(@"preference.title.renderer.release.gl4es", nil),
             localize(@"preference.title.renderer.release.angle", nil),
-            localize(@"preference.title.renderer.release.virgl", nil),
             localize(@"preference.title.renderer.release.zink", nil)
         ].mutableCopy;
     } else {
@@ -179,7 +177,6 @@ localize(@"preference.title.renderer.release.gl4es", nil),
             localize(@"preference.title.renderer.debug.auto", nil),
             localize(@"preference.title.renderer.debug.gl4es", nil),
             localize(@"preference.title.renderer.debug.angle", nil),
-            localize(@"preference.title.renderer.debug.virgl", nil),
             localize(@"preference.title.renderer.debug.zink", nil)
         ].mutableCopy;
 #if CONFIG_RELEASE

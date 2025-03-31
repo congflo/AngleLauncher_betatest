@@ -37,7 +37,6 @@ static GameSurfaceView* pojavWindow;
 
 @property(nonatomic) NSDictionary* metadata;
 
-@property(nonatomic) UITextField *accessoryView;
 @property(nonatomic) TrackedTextField *inputTextField;
 @property(nonatomic) NSMutableArray* swipeableButtons;
 @property(nonatomic) ControlButton* swipingButton;
@@ -165,12 +164,12 @@ static GameSurfaceView* pojavWindow;
     self.longPressGesture.delegate = self;
     [self.touchView addGestureRecognizer:self.longPressGesture];
     
-    //self.longPressTwoGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(keyboardGesture:)];
-    //self.longPressTwoGesture.numberOfTouchesRequired = 2;
-    //self.longPressTwoGesture.allowedTouchTypes = @[@(UITouchTypeDirect)];
-    //self.longPressTwoGesture.cancelsTouchesInView = NO;
-    //self.longPressTwoGesture.delegate = self;
-    //[self.touchView addGestureRecognizer:self.longPressTwoGesture];
+    self.longPressTwoGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(keyboardGesture:)];
+    self.longPressTwoGesture.numberOfTouchesRequired = 2;
+    self.longPressTwoGesture.allowedTouchTypes = @[@(UITouchTypeDirect)];
+    self.longPressTwoGesture.cancelsTouchesInView = NO;
+    self.longPressTwoGesture.delegate = self;
+    [self.touchView addGestureRecognizer:self.longPressTwoGesture];
 
     self.scrollPanGesture = [[UIPanGestureRecognizer alloc]
         initWithTarget:self action:@selector(surfaceOnTouchesScroll:)];
@@ -194,13 +193,12 @@ static GameSurfaceView* pojavWindow;
     self.mousePointerView.userInteractionEnabled = NO;
     [self.touchView addSubview:self.mousePointerView];
 
-    self.inputTextField = [[TrackedTextField alloc] initWithFrame:CGRectMake(0, -32, self.view.bounds.size.width - 100, 30)];
+    self.inputTextField = [[TrackedTextField alloc] initWithFrame:CGRectMake(0, -32.0, self.view.frame.size.width, 30.0)];
     self.inputTextField.backgroundColor = UIColor.secondarySystemBackgroundColor;
     self.inputTextField.delegate = self;
     self.inputTextField.font = [UIFont fontWithName:@"Menlo-Regular" size:20];
     self.inputTextField.clearsOnBeginEditing = YES;
     self.inputTextField.textAlignment = NSTextAlignmentCenter;
-
     self.inputTextField.sendChar = ^(jchar keychar){
         CallbackBridge_nativeSendChar(keychar);
     };
@@ -270,31 +268,6 @@ static GameSurfaceView* pojavWindow;
 
     [self.rootView addSubview:self.inputTextField];
 
-    //Toolbar for keyb
-    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 100, 43)];
-    toolbar.barStyle = UIBarStyleDefault;
-
-    //AccessoryView
-    self.accessoryView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 150, 30)];
-    self.accessoryView.delegate = self;
-    [self.accessoryView setReturnKeyType:UIReturnKeyDone];
-
-    self.accessoryView.borderStyle = UITextBorderStyleRoundedRect;
-    self.accessoryView.placeholder = @"Type here...";
-    self.accessoryView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-
-    
-    //Done and Cancel button
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTapped:)];
-    toolbar.items = @[doneButton];
-
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTapped:)];
-    toolbar.items = @[cancelButton];
-
-    [toolbar setItems:@[[[UIBarButtonItem alloc] initWithCustomView:self.accessoryView], doneButton, cancelButton]];
-    self.inputTextField.inputAccessoryView = toolbar;
-    self.inputTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-
     [self performSelector:@selector(initCategory_LogView)];
 
     // [self setPreferredFramesPerSecond:1000];
@@ -308,47 +281,6 @@ static GameSurfaceView* pojavWindow;
     }
 
     [self launchMinecraft];
-}
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    //không fix được cái bug này rồi... thôi để kiếm cách dùng accessoryView khác tối ưu hơn cách này vậy
-    if ([string isEqualToString:@""]) {
-        [self.inputTextField deleteBackward];
-    }
-    return YES;
-}
-
-//Done and Cancel button
-- (void)doneButtonTapped:(UIBarButtonItem *)button {
-
-    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-
-    [pasteboard setString:self.accessoryView.text];
-
-    [self.inputTextField paste:self];
-
-    CallbackBridge_nativeSendKey(GLFW_KEY_ENTER, 0, 1, 0);
-    CallbackBridge_nativeSendKey(GLFW_KEY_ENTER, 0, 0, 0);
-
-    self.accessoryView.text = @"";
-
-    [self.view endEditing:YES];
-
-    [self.inputTextField resignFirstResponder];
-
-
-}
-
-- (void)cancelButtonTapped:(UIBarButtonItem *)button {
-
-    [self.inputTextField insertText:self.accessoryView.text];
-
-    self.inputTextField.text = @"";
-
-    [self.view endEditing:YES];
-
-    [self.inputTextField resignFirstResponder];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -903,18 +835,11 @@ static GameSurfaceView* pojavWindow;
 #pragma mark - Input view stuff
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
-    UIPasteboard *congchu = [UIPasteboard generalPasteboard];
-
-    [congchu setString:self.accessoryView.text];
-
-    [self.inputTextField paste:self];
     CallbackBridge_nativeSendKey(GLFW_KEY_ENTER, 0, 1, 0);
     CallbackBridge_nativeSendKey(GLFW_KEY_ENTER, 0, 0, 0);
-    textField.text = @"";
+    textField.text = @" ";
     return YES;
 }
-
-
 
 #pragma mark - On-screen button functions
 
@@ -927,15 +852,12 @@ static GameSurfaceView* pojavWindow;
                 case SPECIALBTN_KEYBOARD:
                     if (held == 0) {
                         if (self.inputTextField.isFirstResponder) {
-                            [self.accessoryView resignFirstResponder];
                             [self.inputTextField resignFirstResponder];
                             self.inputTextField.alpha = 1.0f;
                         } else {
                             [self.inputTextField becomeFirstResponder];
+                            // Insert an undeletable space
                             self.inputTextField.text = @" ";
-                            if (self.inputTextField.isFirstResponder) {
-                                [self.accessoryView becomeFirstResponder];
-                            }
                         }
                     }
                     break;
