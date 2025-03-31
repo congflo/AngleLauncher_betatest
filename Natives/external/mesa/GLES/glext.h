@@ -1,12 +1,12 @@
-#ifndef __glext_h_
-#define __glext_h_ 1
+#ifndef __gles1_glext_h_
+#define __gles1_glext_h_ 1
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /*
-** Copyright (c) 2013-2017 The Khronos Group Inc.
+** Copyright (c) 2013-2018 The Khronos Group Inc.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a
 ** copy of this software and/or associated documentation files (the
@@ -38,7 +38,7 @@ extern "C" {
 #define GL_APIENTRYP GL_APIENTRY*
 #endif
 
-/* Generated on date 20171212 */
+/* Generated on date 20190611 */
 
 /* Generated C header for:
  * API: gles1
@@ -50,6 +50,10 @@ extern "C" {
  * Extensions removed: ^(GL_OES_read_format|GL_OES_compressed_paletted_texture|GL_OES_point_size_array|GL_OES_point_sprite)$
  */
 
+#ifndef GL_KHR_debug
+#define GL_KHR_debug 1
+#endif /* GL_KHR_debug */
+
 #ifndef GL_OES_EGL_image
 #define GL_OES_EGL_image 1
 typedef void *GLeglImageOES;
@@ -60,6 +64,13 @@ GL_API void GL_APIENTRY glEGLImageTargetTexture2DOES (GLenum target, GLeglImageO
 GL_API void GL_APIENTRY glEGLImageTargetRenderbufferStorageOES (GLenum target, GLeglImageOES image);
 #endif
 #endif /* GL_OES_EGL_image */
+
+#ifndef GL_OES_EGL_image_external
+#define GL_OES_EGL_image_external 1
+#define GL_TEXTURE_EXTERNAL_OES           0x8D65
+#define GL_TEXTURE_BINDING_EXTERNAL_OES   0x8D67
+#define GL_REQUIRED_TEXTURE_IMAGE_UNITS_OES 0x8D68
+#endif /* GL_OES_EGL_image_external */
 
 #ifndef GL_OES_blend_equation_separate
 #define GL_OES_blend_equation_separate 1
@@ -954,9 +965,6 @@ GL_API void GL_APIENTRY glEndTilingQCOM (GLbitfield preserveMask);
 #define GL_QCOM_writeonly_rendering 1
 #define GL_WRITEONLY_RENDERING_QCOM       0x8823
 #endif /* GL_QCOM_writeonly_rendering */
-
-/* ANGLE GLES1 extensions */
-#include "glext_angle.h"
 
 #ifdef __cplusplus
 }

@@ -139,8 +139,7 @@ NSArray* getRendererKeys(BOOL containsDefault) {
     NSMutableArray *array = @[
         @"auto",
         @ RENDERER_NAME_GL4ES,
-        @ RENDERER_NAME_MTL_ANGLE,
-        @ RENDERER_NAME_VIRGL
+        @ RENDERER_NAME_MTL_ANGLE
     ].mutableCopy;
 
     if (containsDefault) {
@@ -152,6 +151,7 @@ NSArray* getRendererKeys(BOOL containsDefault) {
         // Disabling Zink on iOS 16.0+ to figure out what's wrong with it
     } else {
 #endif
+        [array addObject:@RENDERER_NAME_VIRGL];
         [array addObject:@ RENDERER_NAME_VK_ZINK];
 #if CONFIG_RELEASE
     }

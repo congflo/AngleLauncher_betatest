@@ -27,7 +27,7 @@ void init_loadDefaultEnv() {
     setenv("LD_LIBRARY_PATH", "", 1);
 
     // Ignore mipmap for performance(?) seems does not affect iOS
-    //setenv("LIBGL_MIPMAP", "3", 1);
+    setenv("LIBGL_MIPMAP", "3", 1);
 
     // Disable overloaded functions hack for Minecraft 1.17+
     setenv("LIBGL_NOINTOVLHACK", "1", 1);
@@ -36,7 +36,12 @@ void init_loadDefaultEnv() {
     setenv("LIBGL_NORMALIZE", "1", 1);
 
     // Override OpenGL version to 4.6 for Zink
-    setenv("MESA_GL_VERSION_OVERRIDE", "4.6", 1);
+    if ([[PLProfiles resolveKeyForCurrentProfile:@"renderer"] hasPrefix:@"libOSMesa"]) {
+        setenv("MESA_GL_VERSION_OVERRIDE", "4.3", 1);
+    } else if ([[PLProfiles resolveKeyForCurrentProfile:@"renderer"] hasPrefix:@"libVirglOSM"]) {
+        setenv("MESA_GL_VERSION_OVERRIDE", "4.6", 1);
+    }
+    //setenv("MESA_GL_VERSION_OVERRIDE", "4.6", 1);
 
     // Runs JVM in a separate thread
     setenv("HACK_IGNORE_START_ON_FIRST_THREAD", "1", 1);

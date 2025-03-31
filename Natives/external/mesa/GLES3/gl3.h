@@ -34,7 +34,7 @@ extern "C" {
 **   https://github.com/KhronosGroup/OpenGL-Registry
 */
 
-#include "gl3platform.h"
+#include <GLES3/gl3platform.h>
 
 #ifndef GL_APIENTRYP
 #define GL_APIENTRYP GL_APIENTRY*
@@ -44,7 +44,7 @@ extern "C" {
 #define GL_GLES_PROTOTYPES 1
 #endif
 
-/* Generated on date 20181130 */
+/* Generated on date 20190611 */
 
 /* Generated C header for:
  * API: gles2
@@ -58,7 +58,7 @@ extern "C" {
 
 #ifndef GL_ES_VERSION_2_0
 #define GL_ES_VERSION_2_0 1
-#include "../KHR/khrplatform.h"
+#include <KHR/khrplatform.h>
 typedef khronos_int8_t GLbyte;
 typedef khronos_float_t GLclampf;
 typedef khronos_int32_t GLfixed;

@@ -1106,7 +1106,7 @@ struct __DRIbufferRec {
 };
 
 #define __DRI_DRI2_LOADER "DRI_DRI2Loader"
-#define __DRI_DRI2_LOADER_VERSION 4
+#define __DRI_DRI2_LOADER_VERSION 5
 
 enum dri_loader_cap {
    /* Whether the loader handles RGBA channel ordering correctly. If not,
@@ -1177,6 +1177,15 @@ struct __DRIdri2LoaderExtensionRec {
      * \since 4
      */
     unsigned (*getCapability)(void *loaderPrivate, enum dri_loader_cap cap);
+
+    /**
+     * Clean up any loader state associated with an image.
+     *
+     * \param loaderPrivate  Loader's private data that was previously passed
+     *                       into a __DRIimageExtensionRec::createImage function
+     * \since 5
+     */
+    void (*destroyLoaderImageState)(void *loaderPrivate);
 };
 
 /**
@@ -1319,7 +1328,7 @@ struct __DRIdri2ExtensionRec {
  * extensions.
  */
 #define __DRI_IMAGE "DRI_IMAGE"
-#define __DRI_IMAGE_VERSION 18
+#define __DRI_IMAGE_VERSION 19
 
 /**
  * These formats correspond to the similarly named MESA_FORMAT_*
@@ -1357,6 +1366,7 @@ struct __DRIdri2ExtensionRec {
 #define __DRI_IMAGE_FORMAT_XBGR16161616F 0x1014
 #define __DRI_IMAGE_FORMAT_ABGR16161616F 0x1015
 #define __DRI_IMAGE_FORMAT_SXRGB8       0x1016
+#define __DRI_IMAGE_FORMAT_ABGR16161616 0x1017
 
 #define __DRI_IMAGE_USE_SHARE		0x0001
 #define __DRI_IMAGE_USE_SCANOUT		0x0002
@@ -1386,11 +1396,12 @@ struct __DRIdri2ExtensionRec {
 #define __DRI_IMAGE_FOURCC_SARGB8888	0x83324258
 #define __DRI_IMAGE_FOURCC_SABGR8888	0x84324258
 #define __DRI_IMAGE_FOURCC_SXRGB8888	0x85324258
+#define __DRI_IMAGE_FOURCC_RGBA16161616 0x38344152  /* fourcc_code('R', 'A', '4', '8' ) */
 
 /**
  * Queryable on images created by createImageFromNames.
  *
- * RGB and RGBA are may be usable directly as images but its still
+ * RGB and RGBA might be usable directly as images, but it's still
  * recommended to call fromPlanar with plane == 0.
  *
  * Y_U_V, Y_UV,Y_XUXV and Y_UXVX all requires call to fromPlanar to create
@@ -1794,6 +1805,28 @@ struct __DRIimageExtensionRec {
                                           uint32_t flags,
                                           unsigned *error,
                                           void *loaderPrivate);
+
+   /**
+    * Creates an image with implementation's favorite modifiers and the
+    * provided usage flags.
+    *
+    * This acts like createImageWithModifiers except usage is also specified.
+    *
+    * The created image should be destroyed with destroyImage().
+    *
+    * Returns the new DRIimage. The chosen modifier can be obtained later on
+    * and passed back to things like the kernel's AddFB2 interface.
+    *
+    * \sa __DRIimageRec::createImage
+    *
+    * \since 19
+    */
+   __DRIimage *(*createImageWithModifiers2)(__DRIscreen *screen,
+                                            int width, int height, int format,
+                                            const uint64_t *modifiers,
+                                            const unsigned int modifier_count,
+                                            unsigned int use,
+                                            void *loaderPrivate);
 };
 
 
@@ -2032,7 +2065,7 @@ struct __DRIimageList {
 };
 
 #define __DRI_IMAGE_LOADER "DRI_IMAGE_LOADER"
-#define __DRI_IMAGE_LOADER_VERSION 3
+#define __DRI_IMAGE_LOADER_VERSION 4
 
 struct __DRIimageLoaderExtensionRec {
     __DRIextension base;
@@ -2091,6 +2124,15 @@ struct __DRIimageLoaderExtensionRec {
      * \since 3
      */
     void (*flushSwapBuffers)(__DRIdrawable *driDrawable, void *loaderPrivate);
+
+    /**
+     * Clean up any loader state associated with an image.
+     *
+     * \param loaderPrivate  Loader's private data that was previously passed
+     *                       into a __DRIimageExtensionRec::createImage function
+     * \since 4
+     */
+    void (*destroyLoaderImageState)(void *loaderPrivate);
 };
 
 /**
