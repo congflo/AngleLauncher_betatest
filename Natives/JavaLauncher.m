@@ -36,12 +36,7 @@ void init_loadDefaultEnv() {
     setenv("LIBGL_NORMALIZE", "1", 1);
 
     // Override OpenGL version to 4.6 for Zink
-    if ([[PLProfiles resolveKeyForCurrentProfile:@"renderer"] hasPrefix:@"libOSMesa"]) {
-        setenv("MESA_GL_VERSION_OVERRIDE", "4.3", 1);
-    } else if ([[PLProfiles resolveKeyForCurrentProfile:@"renderer"] hasPrefix:@"libVirglOSM"]) {
-        setenv("MESA_GL_VERSION_OVERRIDE", "4.6", 1);
-    }
-    //setenv("MESA_GL_VERSION_OVERRIDE", "4.6", 1);
+    setenv("MESA_GL_VERSION_OVERRIDE", "4.6", 1);
 
     // Runs JVM in a separate thread
     setenv("HACK_IGNORE_START_ON_FIRST_THREAD", "1", 1);

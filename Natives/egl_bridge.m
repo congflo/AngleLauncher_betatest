@@ -56,13 +56,10 @@ int pojavInitOpenGL() {
         renderer = @ RENDERER_NAME_GL4ES;
         setenv("ANGLE_RENDERER", renderer.UTF8String,1);
         set_osm_bridge_tbl();
-    } else if ([renderer isEqualToString:@ RENDERER_NAME_MTL_ANGLE]) {
+    } else if ([renderer isEqualToString:@ RENDERER_NAME_MTL_ANGLE] || [renderer isEqualToString:@ RENDERER_NAME_VIRGL) {
         set_gl_bridge_tbl();
     } else if ([renderer hasPrefix:@"libOSMesa"]) {
         setenv("GALLIUM_DRIVER","zink",1);
-        set_osm_bridge_tbl();
-    } else if ([renderer hasPrefix:@"libVirglOSM"]) {
-        setenv("GALLIUM_DRIVER", "virgl",1);
         set_osm_bridge_tbl();
     }
     JNI_LWJGL_changeRenderer(renderer.UTF8String);

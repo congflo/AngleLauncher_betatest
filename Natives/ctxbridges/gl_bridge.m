@@ -11,7 +11,12 @@ static EGLDisplay g_EglDisplay;
 static egl_library handle;
 
 void dlsym_EGL() {
-    void* dl_handle = dlopen("@rpath/libtinygl4angle.dylib", RTLD_LOCAL);
+    void* dl_handle;
+    if ([renderer isEqualToString:@ RENDERER_NAME_MTL_ANGLE]) {
+        dl_handle = dlopen("@rpath/libtinygl4angle.dylib", RTLD_LOCAL);
+    } else if ([renderer isEqualToString:@ RENDERER_NAME_VIRGL) {
+        dl_handle = dlopen("@rpath/libvirgl.dylib", RTLD_LOCAL);
+    }
     assert(dl_handle);
     handle.eglBindAPI = dlsym(dl_handle, "eglBindAPI");
     handle.eglChooseConfig = dlsym(dl_handle, "eglChooseConfig");
