@@ -15,7 +15,7 @@ void dlsym_EGL() {
     void* dl_handle;
     if ([renderer isEqualToString:@ RENDERER_NAME_MTL_ANGLE]) {
         dl_handle = dlopen("@rpath/libtinygl4angle.dylib", RTLD_LOCAL);
-    } else if ([renderer isEqualToString:@ RENDERER_NAME_VIRGL) {
+    } else if ([renderer isEqualToString:@ RENDERER_NAME_VIRGL]) {
         dl_handle = dlopen("@rpath/libvirgl.dylib", RTLD_LOCAL);
     }
     assert(dl_handle);
