@@ -11,6 +11,7 @@ static EGLDisplay g_EglDisplay;
 static egl_library handle;
 
 void dlsym_EGL() {
+    NSString *renderer = NSProcessInfo.processInfo.environment[@"ANGLE_RENDERER"];
     void* dl_handle;
     if ([renderer isEqualToString:@ RENDERER_NAME_MTL_ANGLE]) {
         dl_handle = dlopen("@rpath/libtinygl4angle.dylib", RTLD_LOCAL);
