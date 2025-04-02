@@ -41,7 +41,7 @@ AliasDecl(glBindFragDataLocation, EXT)
 AliasDecl(glBindFragDataLocationIndexed, EXT)
 
 // Hidden finctions
-AliasDeclPriv(Drawbuffer)
+AliasDeclPriv(DrawBuffer)
 AliasDeclPriv(PolygonMode)
 
 int proxy_width, proxy_height, proxy_intformat, maxTextureSize;
