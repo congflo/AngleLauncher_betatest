@@ -6,6 +6,7 @@
 
 #include "GL/gl.h"
 #include "GL/glext.h"
+//#include "GLES3/gl32.h"
 #include "string_utils.h"
 
 #define LOOKUP_FUNC(func) \
@@ -17,6 +18,9 @@
 
 #define AliasDecl(NAME, EXT) \
     asm(".global _"# NAME "\n_" #NAME ": b _" #NAME #EXT);
+
+#define AliasDeclPriv(NAME) \
+    asm(".global _gl"# NAME "\n_gl" #NAME ": b _GL_" #NAME);
 
 // Core OpenGL 2.0
 AliasDecl(glGetTexImage, ANGLE)
@@ -35,6 +39,10 @@ AliasDecl(glPushDebugGroup, KHR)
 // GL_EXT_blend_func_extended
 AliasDecl(glBindFragDataLocation, EXT)
 AliasDecl(glBindFragDataLocationIndexed, EXT)
+
+// Hidden finctions
+AliasDeclPriv(Drawbuffer)
+AliasDeclPriv(PolygonMode)
 
 int proxy_width, proxy_height, proxy_intformat, maxTextureSize;
 
@@ -198,7 +206,7 @@ void glTexImage2D(GLenum target, GLint level, GLint internalformat, GLsizei widt
         proxy_width = ((width<<level)>maxTextureSize)?0:width;
         proxy_height = ((height<<level)>maxTextureSize)?0:height;
         proxy_intformat = internalformat;
-        //swizzle_internalformat((GLenum *) &internalformat, format, type);
+        // swizzle_internalformat((GLenum *) &internalformat, format, type);
     } else {
         gles_glTexImage2D(target, level, internalformat, width, height, border, format, type, data);
     }
