@@ -18,7 +18,7 @@ import org.lwjgl.*;
 import org.lwjgl.system.*;
 import org.lwjgl.system.macosx.*;
 
-import static org.lwjgl.opengles.GLES32.*;
+import static org.lwjgl.opengl.GL32.*;
 import static org.lwjgl.system.APIUtil.*;
 import static org.lwjgl.system.Checks.*;
 import static org.lwjgl.system.JNI.*;
