@@ -40,7 +40,7 @@ AliasDecl(glPushDebugGroup, KHR)
 AliasDecl(glBindFragDataLocation, EXT)
 AliasDecl(glBindFragDataLocationIndexed, EXT)
 
-// Hidden finctions
+// Hidden functions
 AliasDeclPriv(DrawBuffer)
 AliasDeclPriv(PolygonMode)
 
