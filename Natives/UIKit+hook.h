@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 
 #define realUIIdiom UIDevice.currentDevice.hook_userInterfaceIdiom
+extern NSNotificationName UIPresentationControllerPresentationTransitionWillBeginNotification;
 
 @interface UIDevice(hook)
 - (NSString *)completeOSVersion;
