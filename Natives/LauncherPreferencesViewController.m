@@ -69,7 +69,7 @@
               @"enableCondition": whenNotInGame
             },
             @{@"key": @"debug_logging",
-              @"hasDetail": @YES,
+              @"hasDetail": @NO,
               @"icon": @"doc.badge.gearshape",
               @"type": self.typeSwitch,
               @"action": ^(BOOL enabled){
@@ -211,6 +211,11 @@
             @{@"key": @"silence_with_switch",
               @"hasDetail": @YES,
               @"icon": @"speaker.zzz",
+              @"type": self.typeSwitch
+            },
+            @{@"key": @"allow_microphone",
+              @"hasDetail": @YES,
+              @"icon": @"mic",
               @"type": self.typeSwitch
             },
         ], @[
@@ -397,6 +402,12 @@
     if (self.navigationController == nil) {
         self.tableView.alpha = 0.9;
     }
+    if (NSProcessInfo.processInfo.isMacCatalystApp) {
+        UIButton* closeButton = [UIButton buttonWithType:UIButtonTypeClose];
+        closeButton.frame = CGRectOffset(closeButton.frame, 10, 10);
+        [closeButton addTarget:self action:@selector(actionClose) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubView:closeButton];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -404,6 +415,10 @@
     if (self.navigationController == nil) {
         [self.presentingViewController performSelector:@selector(updatePreferenceChanges)];
     }
+}
+
+-(void)actionClose {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark UITableView
