@@ -41,6 +41,14 @@
 + (UIWindow *)externalWindow;
 @end
 
+@protocol _UIPointerInteractionDriver<NSObject>
+@property (assign, nonatomic) UIView *view;
+@end
+
+@interface UIPointerInteraction(private)
+- (NSArray <id<_UIPointerInteractionDriver>> *)drivers;
+@end
+
 /*
 @interface WFTextTokenTextView : UITextField
 @property(nonatomic) NSString* placeholder
