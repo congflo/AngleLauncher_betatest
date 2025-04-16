@@ -285,7 +285,7 @@ static GameSurfaceView* pojavWindow;
     AVAudioSessionCategoryOptions options = 0;
     if(getPrefBool(@"video.allow_microphone")) {
         category = AVAudioSessionCategoryPlayAndRecord;
-        option |= AVAudioSessionCategoryOptionAllowAirPlay | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionDefaultToSpeaker;
+        options |= AVAudioSessionCategoryOptionAllowAirPlay | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionDefaultToSpeaker;
     } else if(getPrefBool(@"video.silence_with_switch")) {
         category = AVAudioSessionCategorySoloAmbient;
     } else {
