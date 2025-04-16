@@ -176,7 +176,7 @@ int launchJVM(NSString *username, id launchTarget, int width, int height, int mi
         allocmem = getPrefInt(@"java.allocated_memory");
     }
     NSLog(@"[JavaLauncher] Max RAM allocation is set to %d MB", allocmem);
-    if (!validateVirtualMemorySpace(allocmem) {
+    if (!validateVirtualMemorySpace(allocmem)) {
         UIKit_returnToSplitView();
         showDialog(localize(@"Error", nil), @"Insufficient contiguous virtual memory space. Lower memory allocation and try again.");
         return 1;
