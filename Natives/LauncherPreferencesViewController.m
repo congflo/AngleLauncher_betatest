@@ -406,7 +406,7 @@
         UIButton* closeButton = [UIButton buttonWithType:UIButtonTypeClose];
         closeButton.frame = CGRectOffset(closeButton.frame, 10, 10);
         [closeButton addTarget:self action:@selector(actionClose) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubView:closeButton];
+        [self.view addSubview:closeButton];
     }
 }
 
