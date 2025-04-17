@@ -27,7 +27,7 @@ void init_loadDefaultEnv() {
     setenv("LD_LIBRARY_PATH", "", 1);
 
     // Ignore mipmap for performance(?) seems does not affect iOS
-    //setenv("LIBGL_MIPMAP", "3", 1);
+    setenv("LIBGL_MIPMAP", "3", 1);
 
     // Disable overloaded functions hack for Minecraft 1.17+
     setenv("LIBGL_NOINTOVLHACK", "1", 1);
@@ -35,8 +35,8 @@ void init_loadDefaultEnv() {
     // Fix white color on banner and sheep, since GL4ES 1.1.5
     setenv("LIBGL_NORMALIZE", "1", 1);
 
-    // Override OpenGL version to 4.1 for Zink
-    setenv("MESA_GL_VERSION_OVERRIDE", "4.1", 1);
+    // Override OpenGL version to 4.5 for Zink
+    setenv("MESA_GL_VERSION_OVERRIDE", "4.5", 1);
 
     // Runs JVM in a separate thread
     setenv("HACK_IGNORE_START_ON_FIRST_THREAD", "1", 1);
@@ -174,7 +174,7 @@ int launchJVM(NSString *username, id launchTarget, int width, int height, int mi
     margv[++margc] = [NSString stringWithFormat:@"%@/bin/java", javaHome].UTF8String;
     margv[++margc] = "-XstartOnFirstThread";
     if (!launchJar) {
-        margv[++margc] = "-Djava.system.class.loader=net.kdt.pojavlaunch.PojavClassLoader";
+        margv[++margc] = "-Djava.system.class.loader=net.congcq.anglelaunch.AngleClassLoader";
     }
     margv[++margc] = "-Xms128M";
     margv[++margc] = [NSString stringWithFormat:@"-Xmx%dM", allocmem].UTF8String;
@@ -298,7 +298,7 @@ int launchJVM(NSString *username, id launchTarget, int width, int height, int mi
     }
     margv[++margc] = "-cp";
     margv[++margc] = classpath.UTF8String;
-    margv[++margc] = "net.kdt.pojavlaunch.PojavLauncher";
+    margv[++margc] = "net.congcq.anglelaunch.AngleLauncher";
 
     if (launchJar) {
         margv[++margc] = "-jar";
