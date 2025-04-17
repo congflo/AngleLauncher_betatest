@@ -20,15 +20,6 @@
 
 extern char **environ;
 
-BOOL validateVirtualMemorySpace(int size) {
-    size <<= 20; // convert to MB
-    void* map = mmap(0, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-    // Check if process successfully maps and unmaps a contiguous range
-    if (map == MAP_FAILED || munmap(map, size) != 0)
-        return NO;
-    return YES;
-}
-
 void init_loadDefaultEnv() {
     /* Define default env */
 
@@ -36,7 +27,7 @@ void init_loadDefaultEnv() {
     setenv("LD_LIBRARY_PATH", "", 1);
 
     // Ignore mipmap for performance(?) seems does not affect iOS
-    setenv("LIBGL_MIPMAP", "3", 1);
+    //setenv("LIBGL_MIPMAP", "3", 1);
 
     // Disable overloaded functions hack for Minecraft 1.17+
     setenv("LIBGL_NOINTOVLHACK", "1", 1);
@@ -44,8 +35,8 @@ void init_loadDefaultEnv() {
     // Fix white color on banner and sheep, since GL4ES 1.1.5
     setenv("LIBGL_NORMALIZE", "1", 1);
 
-    // Override OpenGL version to 4.6 for Zink
-    setenv("MESA_GL_VERSION_OVERRIDE", "4.6", 1);
+    // Override OpenGL version to 4.1 for Zink
+    setenv("MESA_GL_VERSION_OVERRIDE", "4.1", 1);
 
     // Runs JVM in a separate thread
     setenv("HACK_IGNORE_START_ON_FIRST_THREAD", "1", 1);
@@ -171,16 +162,11 @@ int launchJVM(NSString *username, id launchTarget, int width, int height, int mi
     int allocmem;
     if (getPrefBool(@"java.auto_ram")) {
         CGFloat autoRatio = getEntitlementValue(@"com.apple.private.memorystatus") ? 0.4 : 0.25;
-        allocmem = roundf((NSProcessInfo.processInfo.physicalMemory >> 20) * autoRatio);
+        allocmem = roundf((NSProcessInfo.processInfo.physicalMemory / 1048576) * autoRatio);
     } else {
         allocmem = getPrefInt(@"java.allocated_memory");
     }
     NSLog(@"[JavaLauncher] Max RAM allocation is set to %d MB", allocmem);
-    if (!validateVirtualMemorySpace(allocmem)) {
-        UIKit_returnToSplitView();
-        showDialog(localize(@"Error", nil), @"Insufficient contiguous virtual memory space. Lower memory allocation and try again.");
-        return 1;
-    }
 
     int margc = -1;
     const char *margv[1000];
@@ -188,7 +174,7 @@ int launchJVM(NSString *username, id launchTarget, int width, int height, int mi
     margv[++margc] = [NSString stringWithFormat:@"%@/bin/java", javaHome].UTF8String;
     margv[++margc] = "-XstartOnFirstThread";
     if (!launchJar) {
-        margv[++margc] = "-Djava.system.class.loader=net.congcq.anglelaunch.AngleClassLoader";
+        margv[++margc] = "-Djava.system.class.loader=net.kdt.pojavlaunch.PojavClassLoader";
     }
     margv[++margc] = "-Xms128M";
     margv[++margc] = [NSString stringWithFormat:@"-Xmx%dM", allocmem].UTF8String;
@@ -312,7 +298,7 @@ int launchJVM(NSString *username, id launchTarget, int width, int height, int mi
     }
     margv[++margc] = "-cp";
     margv[++margc] = classpath.UTF8String;
-    margv[++margc] = "net.congcq.anglelaunch.AngleLauncher";
+    margv[++margc] = "net.kdt.pojavlaunch.PojavLauncher";
 
     if (launchJar) {
         margv[++margc] = "-jar";

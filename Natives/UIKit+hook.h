@@ -1,7 +1,6 @@
 #import <UIKit/UIKit.h>
 
 #define realUIIdiom UIDevice.currentDevice.hook_userInterfaceIdiom
-extern NSNotificationName UIPresentationControllerPresentationTransitionWillBeginNotification;
 
 @interface UIDevice(hook)
 - (NSString *)completeOSVersion;
@@ -13,7 +12,7 @@ extern NSNotificationName UIPresentationControllerPresentationTransitionWillBegi
 @end
 
 @interface UIImage(hook)
-- (UIImage *) hook_imageWithSize:(CGSize)size;
+- (UIImage *)hook_imageWithSize:(CGSize)size;
 @end
 
 // private functions
@@ -40,14 +39,6 @@ extern NSNotificationName UIPresentationControllerPresentationTransitionWillBegi
 @interface UIWindow(global)
 + (UIWindow *)mainWindow;
 + (UIWindow *)externalWindow;
-@end
-
-@protocol _UIPointerInteractionDriver<NSObject>
-@property (assign, nonatomic) UIView *view;
-@end
-
-@interface UIPointerInteraction(private)
-- (NSArray <id<_UIPointerInteractionDriver>> *)drivers;
 @end
 
 /*
