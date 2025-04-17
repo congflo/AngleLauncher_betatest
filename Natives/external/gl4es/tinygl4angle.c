@@ -54,6 +54,27 @@ void(*gles_glTexImage2D)(GLenum target, GLint level, GLint internalformat, GLsiz
 void(*gles_glTexSubImage2D)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *data);
 void(*gles_glTexParameterfv)(GLenum target, GLenum pname, const GLfloat *params);
 
+// Try to add more func
+// Texture
+void glTexImage3D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid *data);
+void glTexSubImage3D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid *data);
+
+// Buffer
+void glBufferData(GLenum target, GLsizeiptr size, const GLvoid *data, GLenum usage);
+void glBufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, const GLvoid *data);
+
+// Framebuffer
+void glBindFramebuffer(GLenum target, GLuint framebuffer);
+void glFramebufferTexture2D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level);
+
+// Shader
+GLuint glCreateProgram(void);
+void glLinkProgram(GLuint program);
+
+// Draw
+void glDrawArrays(GLenum mode, GLint first, GLsizei count);
+void glDrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices);
+
 void glClearDepth(GLdouble depth) {
     glClearDepthf(depth);
 }
