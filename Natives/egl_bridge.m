@@ -13,6 +13,7 @@
 #include "EGL/egl.h"
 #include "EGL/eglext.h"
 #include "GL/osmesa.h"
+#include "GL/gl.h"
 
 #include "glfw_keycodes.h"
 #include "ctxbridges/bridge_tbl.h"
