@@ -69,7 +69,7 @@
               @"enableCondition": whenNotInGame
             },
             @{@"key": @"debug_logging",
-              @"hasDetail": @NO,
+              @"hasDetail": @YES,
               @"icon": @"doc.badge.gearshape",
               @"type": self.typeSwitch,
               @"action": ^(BOOL enabled){
@@ -96,11 +96,13 @@
               },
               @"pickKeys": @[
                   @"AppIcon-Light",
-                  @"AppIcon-Dark"
+                  @"AppIcon-Dark",
+                  @"AppIcon-Development"
               ],
               @"pickList": @[
                   localize(@"preference.title.appicon-default", nil),
-                  localize(@"preference.title.appicon-dark", nil)
+                  localize(@"preference.title.appicon-dark", nil),
+                  localize(@"preference.title.appicon-development", nil)
               ]
             },
             @{@"key": @"hidden_sidebar",
@@ -133,14 +135,14 @@
               @"icon": @"trash",
               @"type": self.typeButton,
               @"enableCondition": ^BOOL(){
-                  NSString *demoPath = [NSString stringWithFormat:@"%s/instances/default", getenv("ANGLE_HOME")];
+                  NSString *demoPath = [NSString stringWithFormat:@"%s/.demo", getenv("POJAV_HOME")];
                   int count = [NSFileManager.defaultManager contentsOfDirectoryAtPath:demoPath error:nil].count;
                   return whenNotInGame() && count > 0;
               },
               @"showConfirmPrompt": @YES,
               @"destructive": @YES,
               @"action": ^void(){
-                  NSString *demoPath = [NSString stringWithFormat:@"%s/instances/default", getenv("ANGLE_HOME")];
+                  NSString *demoPath = [NSString stringWithFormat:@"%s/.demo", getenv("POJAV_HOME")];
                   NSError *error;
                   if([NSFileManager.defaultManager removeItemAtPath:demoPath error:&error]) {
                       [NSFileManager.defaultManager createDirectoryAtPath:demoPath
@@ -171,7 +173,7 @@
               @"icon": @"viewfinder",
               @"type": self.typeSlider,
               @"min": @(25),
-              @"max": @(100)
+              @"max": @(150)
             },
             @{@"key": @"max_framerate",
               @"hasDetail": @YES,
@@ -262,7 +264,7 @@
                 @"hasDetail": @YES,
                 @"icon": @"cursorarrow.click.badge.clock",
                 @"type": self.typeSlider,
-                @"min": @(100),
+                @"min": @(1),
                 @"max": @(1000),
             },
             @{@"key": @"button_scale",
@@ -417,7 +419,7 @@
     }
 }
 
--(void)actionClose {
+- (void)actionClose {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -425,10 +427,10 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == 0) { // Add to general section
-        return [NSString stringWithFormat:@"AngleLauncher %@-%s (%s/%s)\n%@ on %@ (%s)\nPID: %d",
+        return [NSString stringWithFormat:@"PojavLauncher %@-%s (%s/%s)\n%@ on %@ (%s)\nPID: %d",
             NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"],
             CONFIG_TYPE, CONFIG_BRANCH, CONFIG_COMMIT,
-            UIDevice.currentDevice.completeOSVersion, [HostManager GetModelName], getenv("ANGLE_DETECTEDINST"), getpid()];
+            UIDevice.currentDevice.completeOSVersion, [HostManager GetModelName], getenv("POJAV_DETECTEDINST"), getpid()];
     }
 
     NSString *footer = NSLocalizedStringWithDefaultValue(([NSString stringWithFormat:@"preference.section.footer.%@", self.prefSections[section]]), @"Localizable", NSBundle.mainBundle, @" ", nil);

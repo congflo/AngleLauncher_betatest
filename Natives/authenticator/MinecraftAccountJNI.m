@@ -1,7 +1,7 @@
 #import "BaseAuthenticator.h"
 #include "jni.h"
 
-JNIEXPORT jstring JNICALL Java_net_congcq_anglelaunch_value_MinecraftAccount_getAccessTokenFromKeychain(JNIEnv *env, jclass clazz, jstring xuid) {
+JNIEXPORT jstring JNICALL Java_net_kdt_pojavlaunch_value_MinecraftAccount_getAccessTokenFromKeychain(JNIEnv *env, jclass clazz, jstring xuid) {
     // This function should only be called once
     static BOOL called = NO;
     if (called) {

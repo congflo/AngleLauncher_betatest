@@ -8,7 +8,7 @@
 static PLPreferences* pref;
 
 void loadPreferences(BOOL reset) {
-    assert(getenv("ANGLE_HOME"));
+    assert(getenv("POJAV_HOME"));
     if (reset) {
         [pref reset];
     } else {
@@ -18,7 +18,7 @@ void loadPreferences(BOOL reset) {
 
 void toggleIsolatedPref(BOOL forceEnable) {
     if (!pref.instancePath) {
-        pref.instancePath = [NSString stringWithFormat:@"%s/launcher_preferences.plist", getenv("ANGLE_GAME_DIR")];
+        pref.instancePath = [NSString stringWithFormat:@"%s/launcher_preferences.plist", getenv("POJAV_GAME_DIR")];
     }
     [pref toggleIsolationForced:forceEnable];
 }
@@ -58,8 +58,7 @@ void resetWarnings() {
 
 #pragma mark Safe area
 
-CGRect getSafeArea() {
-    CGRect screenBounds = UIScreen.mainScreen.bounds;
+CGRect getSafeArea(CGRect screenBounds) {
     UIEdgeInsets safeArea = UIEdgeInsetsFromString(getPrefObject(@"control.control_safe_area"));
     if (screenBounds.size.width < screenBounds.size.height) {
         safeArea = UIEdgeInsetsMake(safeArea.right, safeArea.top, safeArea.left, safeArea.bottom);
@@ -67,8 +66,7 @@ CGRect getSafeArea() {
     return UIEdgeInsetsInsetRect(screenBounds, safeArea);
 }
 
-void setSafeArea(CGRect frame) {
-    CGSize screenSize = UIScreen.mainScreen.bounds.size;
+void setSafeArea(CGSize screenSize, CGRect frame) {
     UIEdgeInsets safeArea;
     // TODO: make safe area consistent across opposite orientations?
     if (screenSize.width < screenSize.height) {
@@ -123,7 +121,7 @@ NSString* getSelectedJavaHome(NSString* defaultJRETag, int minVersion) {
     if ([selectedDir isEqualToString:@"internal"]) {
         selectedDir = [NSString stringWithFormat:@"%@/java_runtimes/java-%@-openjdk", NSBundle.mainBundle.bundlePath, selectedVer];
     } else {
-        selectedDir = [NSString stringWithFormat:@"%s/java_runtimes/%@", getenv("ANGLE_HOME"), selectedDir];
+        selectedDir = [NSString stringWithFormat:@"%s/java_runtimes/%@", getenv("POJAV_HOME"), selectedDir];
     }
 
     if ([NSFileManager.defaultManager fileExistsAtPath:selectedDir]) {
@@ -166,10 +164,8 @@ NSArray* getRendererNames(BOOL containsDefault) {
         // Disabling Zink on iOS 16.0+ to figure out what's wrong with it
         array = @[
             localize(@"preference.title.renderer.release.auto", nil),
-
-localize(@"preference.title.renderer.release.gl4es", nil),
-            localize(@"preference.title.renderer.release.angle", nil),
-            localize(@"preference.title.renderer.release.zink", nil)
+            localize(@"preference.title.renderer.release.gl4es", nil),
+            localize(@"preference.title.renderer.release.angle", nil)
         ].mutableCopy;
     } else {
 #endif

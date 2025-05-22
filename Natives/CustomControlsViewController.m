@@ -37,7 +37,6 @@
     [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
     [self setNeedsUpdateOfHomeIndicatorAutoHidden];
 
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
     UIEdgeInsets insets = UIApplication.sharedApplication.windows.firstObject.safeAreaInsets;
 
     UILabel *guideLabel = [[UILabel alloc] initWithFrame:self.view.frame];
@@ -48,7 +47,7 @@
     guideLabel.text = localize(@"custom_controls.hint", nil);
     [self.view addSubview:guideLabel]; 
 
-    self.ctrlView = [[ControlLayout alloc] initWithFrame:getSafeArea()];
+    self.ctrlView = [[ControlLayout alloc] initWithFrame:getSafeArea(self.view.frame)];
     self.ctrlView.layer.borderColor = UIColor.labelColor.CGColor;
     [self.view addSubview:self.ctrlView];
 
@@ -173,7 +172,7 @@
 
 - (void)viewDidLayoutSubviews {
     if (self.navigationBar.hidden) {
-        self.ctrlView.frame = getSafeArea();
+        self.ctrlView.frame = getSafeArea(self.view.frame);
     }
 
     // Update dynamic position for each view
@@ -193,7 +192,7 @@
             self.ctrlView.frame = UIEdgeInsetsInsetRect(self.view.frame, getDefaultSafeArea());
             break;
         case 2:
-            self.ctrlView.frame = getSafeArea();
+            self.ctrlView.frame = getSafeArea(self.view.frame);
             break;
     }
     self.ctrlView.userInteractionEnabled = sender.selectedSegmentIndex == 2;
@@ -279,7 +278,7 @@
             showDialog(localize(@"custom_controls.control_menu.save.error.json", nil), error.localizedDescription);
             return;
         }
-        BOOL success = [jsonData writeToFile:[NSString stringWithFormat:@"%s/controlmap/%@.json", getenv("ANGLE_HOME"), field.text] options:NSDataWritingAtomic error:&error];
+        BOOL success = [jsonData writeToFile:[NSString stringWithFormat:@"%s/controlmap/%@.json", getenv("POJAV_HOME"), field.text] options:NSDataWritingAtomic error:&error];
         if (!success) {
             showDialog(localize(@"custom_controls.control_menu.save.error.write", nil), error.localizedDescription);
             return;
@@ -307,7 +306,7 @@
 
 - (void)actionOpenFilePicker:(void (^)(NSString *name))handler {
     FileListViewController *vc = [[FileListViewController alloc] init];
-    vc.listPath = [NSString stringWithFormat:@"%s/controlmap", getenv("ANGLE_HOME")];
+    vc.listPath = [NSString stringWithFormat:@"%s/controlmap", getenv("POJAV_HOME")];
     vc.whenItemSelected = handler;
     vc.modalPresentationStyle = UIModalPresentationPopover;
     vc.preferredContentSize = CGSizeMake(350, 250);
@@ -345,12 +344,12 @@
 }
 
 - (void)actionMenuSafeAreaCancel {
-    self.ctrlView.frame = getSafeArea();
+    self.ctrlView.frame = getSafeArea(self.view.frame);
     [self actionMenuSafeArea];
 }
 
 - (void)actionMenuSafeAreaDone {
-    setSafeArea(self.ctrlView.frame);
+    setSafeArea(self.view.frame.size, self.ctrlView.frame);
     [self actionMenuSafeArea];
 }
 

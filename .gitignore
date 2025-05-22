@@ -3,11 +3,11 @@
 /JavaApp/.gradle
 /JavaApp/build
 /JavaApp/local_out
-/Natives/AngleLauncher
+/Natives/PojavLauncher
 /Natives/build
 .DS_Store
-/AngleLauncher.xcodeproj/xcshareddata/*
-/AngleLauncher.xcodeproj/xcuserdata/*
-/AngleLauncher.xcodeproj/project.xcworkspace/*
+/PojavLauncher.xcodeproj/xcshareddata/*
+/PojavLauncher.xcodeproj/xcuserdata/*
+/PojavLauncher.xcodeproj/project.xcworkspace/*
 /depends
 /Natives/config.h

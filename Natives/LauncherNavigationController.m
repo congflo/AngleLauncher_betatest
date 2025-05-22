@@ -119,7 +119,7 @@ static void *ProgressObserverContext = &ProgressObserverContext;
 }
 
 - (BOOL)isVersionInstalled:(NSString *)versionId {
-    NSString *localPath = [NSString stringWithFormat:@"%s/versions/%@", getenv("ANGLE_GAME_DIR"), versionId];
+    NSString *localPath = [NSString stringWithFormat:@"%s/versions/%@", getenv("POJAV_GAME_DIR"), versionId];
     BOOL isDirectory;
     [NSFileManager.defaultManager fileExistsAtPath:localPath isDirectory:&isDirectory];
     return isDirectory;
@@ -132,7 +132,7 @@ static void *ProgressObserverContext = &ProgressObserverContext;
     [localVersionList removeAllObjects];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *versionPath = [NSString stringWithFormat:@"%s/versions/", getenv("ANGLE_GAME_DIR")];
+    NSString *versionPath = [NSString stringWithFormat:@"%s/versions/", getenv("POJAV_GAME_DIR")];
     NSArray *list = [fileManager contentsOfDirectoryAtPath:versionPath error:Nil];
     for (NSString *versionId in list) {
         if (![self isVersionInstalled:versionId]) continue;

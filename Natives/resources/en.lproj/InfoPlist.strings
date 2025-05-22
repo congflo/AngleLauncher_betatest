@@ -1,4 +1,3 @@
-{
-    "AngleLauncher uses the local network to find and communicate with AltServer and LAN servers." = "AngleLauncher uses the local network to find and communicate with AltServer and LAN servers.";
-    "AngleLauncher uses the microphone to enable support for voice chat mods." = "AngleLauncher uses the microphone to enable support for voice chat mods.";
-}
+/* Localized versions of Info.plist keys */
+"PojavLauncher uses the local network to find and communicate with AltServer and LAN servers." = "PojavLauncher uses the local network to find and communicate with AltServer and LAN servers.";
+"PojavLauncher uses the microphone to enable support for voice chat mods." = "PojavLauncher uses the microphone to enable support for voice chat mods.";

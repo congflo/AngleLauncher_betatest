@@ -111,7 +111,7 @@ static GameSurfaceView* pojavWindow;
     self.rootView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width + 30.0, self.view.frame.size.height)];
     [self.view addSubview:self.rootView];
 
-    self.ctrlView = [[ControlLayout alloc] initWithFrame:getSafeArea()];
+    self.ctrlView = [[ControlLayout alloc] initWithFrame:getSafeArea(self.view.frame)];
 
     [self performSelector:@selector(initCategory_Navigation)];
     
@@ -130,6 +130,7 @@ static GameSurfaceView* pojavWindow;
     [self.rootView addSubview:self.ctrlView];
 
     [self performSelector:@selector(setupCategory_Navigation)];
+
 
     UIHoverGestureRecognizer *hoverGesture = [[NSClassFromString(@"UIHoverGestureRecognizer") alloc] initWithTarget:self action:@selector(surfaceOnHover:)];
     [self.surfaceView addGestureRecognizer:hoverGesture];
@@ -158,14 +159,13 @@ static GameSurfaceView* pojavWindow;
     self.longPressGesture.cancelsTouchesInView = NO;
     self.longPressGesture.delegate = self;
     [self.touchView addGestureRecognizer:self.longPressGesture];
-/*    
+    
     self.longPressTwoGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(keyboardGesture:)];
     self.longPressTwoGesture.numberOfTouchesRequired = 2;
     self.longPressTwoGesture.allowedTouchTypes = @[@(UITouchTypeDirect)];
     self.longPressTwoGesture.cancelsTouchesInView = NO;
     self.longPressTwoGesture.delegate = self;
     [self.touchView addGestureRecognizer:self.longPressTwoGesture];
-*/
 
     self.scrollPanGesture = [[UIPanGestureRecognizer alloc]
         initWithTarget:self action:@selector(surfaceOnTouchesScroll:)];
@@ -209,7 +209,6 @@ static GameSurfaceView* pojavWindow;
         GCMouse* mouse = note.object;
         [self registerMouseCallbacks:mouse];
         self.mousePointerView.hidden = isGrabbing || !virtualMouseEnabled;
-        [self setNeedsUpdateOfPrefersPointerLocked];
         if (getPrefBool(@"control.hardware_hide")) {
             self.ctrlView.hidden = YES;
         }
@@ -283,9 +282,9 @@ static GameSurfaceView* pojavWindow;
     NSError *sessionError = nil;
     AVAudioSessionCategory category;
     AVAudioSessionCategoryOptions options = 0;
-    if(getPrefBool(@"video.allow_microphone")) {
+    if (getPrefBool(@"video.allow_microphone")) {
         category = AVAudioSessionCategoryPlayAndRecord;
-        options |= AVAudioSessionCategoryOptionAllowAirPlay | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionDefaultToSpeaker;
+        options |= AVAudioSessionCategoryOptionAllowAirPlay | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionDefaultToSpeaker; 
     } else if(getPrefBool(@"video.silence_with_switch")) {
         category = AVAudioSessionCategorySoloAmbient;
     } else {
@@ -337,7 +336,7 @@ static GameSurfaceView* pojavWindow;
 
     self.shouldHideControlsFromRecording = getPrefFloat(@"control.recording_hide");
     [self.ctrlView hideViewFromCapture:self.shouldHideControlsFromRecording];
-    self.ctrlView.frame = getSafeArea();
+    self.ctrlView.frame = getSafeArea(self.view.frame);
 
     // Update gestures state
     self.slideableHotbar = getPrefBool(@"control.slideable_hotbar");
@@ -504,7 +503,7 @@ static GameSurfaceView* pojavWindow;
         [self viewWillTransitionToSize_Navigation:frame];
 
         // Update custom controls button position
-        self.ctrlView.frame = getSafeArea();
+        self.ctrlView.frame = getSafeArea(self.view.frame);
         [self.ctrlView.subviews makeObjectsPerformSelector:@selector(update)];
 
         // Update game resolution
@@ -1002,8 +1001,7 @@ int touchesMovedCount;
 
 // Equals to Android ACTION_MOVE
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    
+{   
     [super touchesMoved:touches withEvent:event];
 
     for (UITouch *touch in touches) {

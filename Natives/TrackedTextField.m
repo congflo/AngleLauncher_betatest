@@ -7,7 +7,7 @@ extern bool isUseStackQueueCall;
 
 // There are private functions that we are unable to find public replacements
 // (Both are found by placing breakpoints)
-@interface UITextField()
+@interface UITextField(private)
 - (NSRange)insertFilteredText:(NSString *)text;
 - (id) replaceRangeWithTextWithoutClosingTyping:(UITextRange *)range replacementText:(NSString *)text;
 @end

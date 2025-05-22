@@ -24,7 +24,7 @@
 - (void)loadControlFile:(NSString *)name {
     [self removeAllButtons];
 
-    NSString *controlFilePath = [NSString stringWithFormat:@"%s/controlmap/%@", getenv("ANGLE_HOME"), name];
+    NSString *controlFilePath = [NSString stringWithFormat:@"%s/controlmap/%@", getenv("POJAV_HOME"), name];
 
     self.layoutDictionary = parseJSONFromFile(controlFilePath);
     if (self.layoutDictionary[@"NSErrorObject"] != nil) {

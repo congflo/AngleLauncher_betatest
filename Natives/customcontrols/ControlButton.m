@@ -171,7 +171,7 @@
     self.displayInGame = [self.properties[@"displayInGame"] boolValue];
     self.displayInMenu = [self.properties[@"displayInMenu"] boolValue];
 
-    // net/congcq/anglelaunch/customcontrols/ControlData.update()
+    // net/kdt/pojavlaunch/customcontrols/ControlData.update()
     [self preProcessProperties];
 
     NSString *propDynamicX = (NSString *) self.properties[@"dynamicX"];

@@ -295,7 +295,7 @@ void AWTInputBridge_sendKey(int keycode) {
     self.logOutputView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:self.logOutputView];
 
-    setenv("ANGLE_SKIP_JNI_GLFW", "1", 1);
+    setenv("POJAV_SKIP_JNI_GLFW", "1", 1);
  
     // Register the display loop
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

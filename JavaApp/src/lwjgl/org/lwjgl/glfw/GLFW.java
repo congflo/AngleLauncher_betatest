@@ -12,7 +12,7 @@ import java.nio.*;
 
 import javax.annotation.*;
 
-import net.congcq.anglelaunch.Tools;
+import net.kdt.pojavlaunch.Tools;
 
 import org.lwjgl.*;
 import org.lwjgl.system.*;
@@ -514,7 +514,7 @@ public class GLFW
 
     static {
         try {
-            System.load(System.getenv("BUNDLE_PATH") + "/AngleLauncher");
+            System.load(System.getenv("BUNDLE_PATH") + "/PojavLauncher");
         } catch (UnsatisfiedLinkError e) {
             e.printStackTrace();
         }
@@ -584,7 +584,7 @@ public class GLFW
         throw new UnsupportedOperationException();
     }
 
-    private static final SharedLibrary GLFW = new MacOSXLibraryDL("AngleLauncher", DynamicLinkLoader.RTLD_DEFAULT);
+    private static final SharedLibrary GLFW = new MacOSXLibraryDL("PojavLauncher", DynamicLinkLoader.RTLD_DEFAULT);
 
 
     /** Contains the function pointers loaded from the glfw {@link SharedLibrary}. */
@@ -1095,7 +1095,7 @@ public class GLFW
         if (mode == GLFW_CURSOR) {
             switch (value) {
                 case GLFW_CURSOR_DISABLED:
-                    net.congcq.anglelaunch.uikit.UIKit.updateMCGuiScale();
+                    net.kdt.pojavlaunch.uikit.UIKit.updateMCGuiScale();
                     CallbackBridge.nativeSetGrabbing(true);
                     break;
                 default: CallbackBridge.nativeSetGrabbing(false);

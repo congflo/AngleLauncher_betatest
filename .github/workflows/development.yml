@@ -2,7 +2,12 @@ name: Development build
 
 on:
   pull_request:
+    branches-ignore:
+      - 'l10n_main'
+    types: [opened, reopened]
   push:
+    branches-ignore:
+      - 'l10n_main'
   workflow_dispatch:
 
 jobs:
@@ -125,38 +130,41 @@ jobs:
             # Build ipa and tipa for iOS
             gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }}
             gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }} TROLLSTORE_JIT_ENT=1
+          elif [ "${{ matrix.platform_name }}" == "tvos" ]; then
+            # Build tipa only for tvOS
+            gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }} TROLLSTORE_JIT_ENT=1
           else
             # Build ipa only for everything else
             gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }}
           fi
 
-      - name: Upload ipa
+      - name: Upload regular ipa
         uses: actions/upload-artifact@main
         with:
-          name: AngleLauncher-${{ matrix.platform_name }}
-          path: artifacts/app-debug-*-${{ matrix.platform_name }}.ipa
+          name: net.kdt.pojavlauncher-${{ matrix.platform_name }}.ipa
+          path: artifacts/net.kdt.pojavlauncher-*-${{ matrix.platform_name }}.ipa
 
-      - name: Upload tipa
+      - name: Upload regular tipa
         uses: actions/upload-artifact@main
         with:
-          name: AngleLauncher-${{ matrix.platform_name }}-trollstore
-          path: artifacts/app-debug-*-${{ matrix.platform_name }}-trollstore.tipa
+          name: net.kdt.pojavlauncher-${{ matrix.platform_name }}-trollstore.tipa
+          path: artifacts/net.kdt.pojavlauncher-*-${{ matrix.platform_name }}-trollstore.tipa
 
-      - name: Upload no-runtime ipa
+      - name: Upload slimmed ipa
         uses: actions/upload-artifact@main
         with:
-          name: AngleLauncher-no-runtime-${{ matrix.platform_name }}
-          path: artifacts/no-runtime-*-${{ matrix.platform_name }}.ipa
+          name: net.kdt.pojavlauncher.slimmed-${{ matrix.platform_name }}.ipa
+          path: artifacts/net.kdt.pojavlauncher.slimmed-*-${{ matrix.platform_name }}.ipa
 
-      - name: Upload no-runtime tipa
+      - name: Upload slimmed tipa
         uses: actions/upload-artifact@main
         with:
-          name: AngleLauncher-no-runtime-${{ matrix.platform_name }}-trollstore
-          path: artifacts/no-runtime-*-${{ matrix.platform_name }}-trollstore.tipa
+          name: net.kdt.pojavlauncher.slimmed-${{ matrix.platform_name }}-trollstore.tipa
+          path: artifacts/net.kdt.pojavlauncher.slimmed-*-${{ matrix.platform_name }}-trollstore.tipa
 
-      - name: Upload AngleLauncher.dSYM
+      - name: Upload PojavLauncher.dSYM
         uses: actions/upload-artifact@main
         if: matrix.platform_name == 'ios'
         with:
-          name: AngleLauncher.dSYM
-          path: artifacts/AngleLauncher.dSYM
+          name: PojavLauncher.dSYM
+          path: artifacts/PojavLauncher.dSYM

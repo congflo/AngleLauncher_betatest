@@ -132,10 +132,10 @@
 
 - (id)initWithAutomaticMigrator {
     self = [super init];
-    self.globalPath = [@(getenv("ANGLE_HOME")) stringByAppendingPathComponent:@"launcher_preferences_v2.plist"];
+    self.globalPath = [@(getenv("POJAV_HOME")) stringByAppendingPathComponent:@"launcher_preferences_v2.plist"];
     NSMutableDictionary *pref = [NSMutableDictionary dictionaryWithContentsOfFile:self.globalPath];
 
-    NSString *oldPath = [@(getenv("ANGLE_HOME")) stringByAppendingPathComponent:@"launcher_preferences.plist"];
+    NSString *oldPath = [@(getenv("POJAV_HOME")) stringByAppendingPathComponent:@"launcher_preferences.plist"];
     NSMutableDictionary *oldPref = [NSMutableDictionary dictionaryWithContentsOfFile:oldPath];
 
     if (pref || !oldPref[@"env_vars"]) {

@@ -9,13 +9,20 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>AngleLauncher</string>
+	<string>PojavLauncher</string>
 	<key>CFBundleExecutable</key>
-	<string>AngleLauncher</string>
+	<string>PojavLauncher</string>
 	<key>CFBundleIcons</key>
 	<dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
+			<key>AppIcon-Development</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>AppIcon-Development60x60</string>
+				</array>
+			</dict>
 			<key>AppIcon-Dark</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
@@ -46,6 +53,14 @@
 					<string>AppIcon-Dark76x76</string>
 				</array>
 			</dict>
+			<key>AppIcon-Development</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>AppIcon-Development60x60</string>
+					<string>AppIcon-Development76x76</string>
+				</array>
+			</dict>
 		</dict>
 		<key>CFBundlePrimaryIcon</key>
 		<dict>
@@ -59,30 +74,34 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>net.congcq.anglelauncher</string>
+	<string>net.kdt.pojavlauncher</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>AngleLauncher</string>
+	<string>PojavLauncher</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>3.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>net.congcq.anglelauncher.urlscheme</string>
+			<string>net.kdt.pojavlauncher.urlscheme</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>anglelauncher</string>
+				<string>pojavlauncher</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>3.0</string>
+	<key>GCSupportsControllerUserInteraction</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
 	<key>GCSupportedGameControllers</key>
 	<array>
 		<dict>
@@ -90,8 +109,6 @@
 			<string>ExtendedGamepad</string>
 		</dict>
 	</array>
-	<key>GCSupportsControllerUserInteraction</key>
-	<true/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>filza</string>
@@ -109,9 +126,9 @@
 		<string>_altserver._tcp</string>
 	</array>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>AngleLauncher uses the local network to find and communicate with AltServer and LAN servers.</string>
+	<string>PojavLauncher uses the local network to find and communicate with AltServer and LAN servers.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>AngleLauncher uses the microphone to enable support for voice chat mods.</string>
+	<string>PojavLauncher uses the microphone to enable support for voice chat mods.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -140,7 +157,7 @@
 	</dict>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<key>UIBackgroundModes</key>
+	<key>UIBackgroundModes</key>	
 	<array>
 		<string>fetch</string>
 	</array>
@@ -152,8 +169,6 @@
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>arm64</string>
@@ -173,11 +188,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UISupportsDocumentBrowser</key>
-	<true/>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<true/>
 	<key>UIWhitePointAdaptivityStyle</key>
 	<string>UIWhitePointAdaptivityStyleGame</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
+	<key>UISupportsDocumentBrowser</key>
+	<true/>
 </dict>
 </plist>

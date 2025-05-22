@@ -27,7 +27,7 @@
     }
 
     // List accounts
-    NSString *listPath = [NSString stringWithFormat:@"%s/accounts", getenv("ANGLE_HOME")];
+    NSString *listPath = [NSString stringWithFormat:@"%s/accounts", getenv("POJAV_HOME")];
     NSFileManager *fm = [NSFileManager defaultManager];
     NSArray *files = [fm contentsOfDirectoryAtPath:listPath error:nil];
     for(NSString *file in files) {
@@ -95,7 +95,9 @@
     [self addActivityIndicatorTo:cell];
 
     id callback = ^(id status, BOOL success) {
-        [self callbackMicrosoftAuth:status success:success forCell:cell];
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            [self callbackMicrosoftAuth:status success:success forCell:cell];
+        });
     };
     [[BaseAuthenticator loadSavedName:self.accountList[indexPath.row][@"username"]] refreshTokenWithCallback:callback];
 }
@@ -106,7 +108,7 @@
 
         NSString *str = self.accountList[indexPath.row][@"username"];
         NSFileManager *fm = [NSFileManager defaultManager];
-        NSString *path = [NSString stringWithFormat:@"%s/accounts/%@.json", getenv("ANGLE_HOME"), str];
+        NSString *path = [NSString stringWithFormat:@"%s/accounts/%@.json", getenv("POJAV_HOME"), str];
         if (self.whenDelete != nil) {
             self.whenDelete(str);
         }
@@ -210,14 +212,18 @@
 
         NSDictionary *queryItems = [self parseQueryItems:callbackURL.absoluteString];
         if (queryItems[@"code"]) {
-            self.modalInPresentation = YES;
-            self.tableView.userInteractionEnabled = NO;
-            [self addActivityIndicatorTo:sender];
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                self.modalInPresentation = YES;
+                self.tableView.userInteractionEnabled = NO;
+                [self addActivityIndicatorTo:sender];
+            });
             id callback = ^(id status, BOOL success) {
                 if ([status isKindOfClass:NSString.class] && [status isEqualToString:@"DEMO"] && success) {
                     showDialog(localize(@"login.warn.title.demomode", nil), localize(@"login.warn.message.demomode", nil));
                 }
-                [self callbackMicrosoftAuth:status success:success forCell:sender];
+                dispatch_async(dispatch_get_main_queue(), ^(){
+                    [self callbackMicrosoftAuth:status success:success forCell:sender];
+                });
             };
             [[[MicrosoftAuthenticator alloc] initWithInput:queryItems[@"code"]] loginWithCallback:callback];
         } else {

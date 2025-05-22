@@ -6,7 +6,7 @@
 
 #include "GL/gl.h"
 #include "GL/glext.h"
-#include "GLES3/gl32.h"
+//#include "GLES3/gl32.h"
 #include "string_utils.h"
 
 #define LOOKUP_FUNC(func) \
@@ -40,7 +40,7 @@ AliasDecl(glPushDebugGroup, KHR)
 AliasDecl(glBindFragDataLocation, EXT)
 AliasDecl(glBindFragDataLocationIndexed, EXT)
 
-// Hidden functions
+// Hidden finctions
 AliasDeclPriv(DrawBuffer)
 AliasDeclPriv(PolygonMode)
 

@@ -101,8 +101,8 @@ bool init_checkForJailbreak() {
 }
 
 void init_logDeviceAndVer(char *argument) {
-    // AngleLauncher version
-    NSLog(@"[Pre-Init] AngleLauncher INIT!");
+    // PojavLauncher version
+    NSLog(@"[Pre-Init] PojavLauncher INIT!");
     NSLog(@"[Pre-Init] Version: %@-%s", NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"], CONFIG_TYPE);
     NSLog(@"[Pre-Init] Commit: %s (%s)", CONFIG_COMMIT, CONFIG_BRANCH);
     
@@ -115,7 +115,7 @@ void init_logDeviceAndVer(char *argument) {
     } else {
         type = "Unjailbroken";
     }
-    setenv("ANGLE_DETECTEDINST", type, 1);
+    setenv("POJAV_DETECTEDINST", type, 1);
     
     NSLog(@"[Pre-Init] Device: %@", [HostManager GetModelName]);
     NSLog(@"[Pre-Init] %@ (%s)", UIDevice.currentDevice.completeOSVersion, type);
@@ -128,9 +128,12 @@ void init_logDeviceAndVer(char *argument) {
 }
 
 void init_redirectStdio() {
-    NSLog(@"[Pre-init] Starting logging STDIO to latestlog.txt\n");
+    if (getenv("POJAV_LOG_TO_CONSOLE") != NULL) {
+        NSLog(@"[Pre-init] Starting logging STDIO to latestlog.txt\n");
+        return;
+    }
 
-    NSString *home = @(getenv("ANGLE_HOME"));
+    NSString *home = @(getenv("POJAV_HOME"));
     NSString *currName = [home stringByAppendingPathComponent:@"latestlog.txt"];
     NSString *oldName = [home stringByAppendingPathComponent:@"latestlog.old.txt"];
     [fm removeItemAtPath:oldName error:nil];
@@ -187,12 +190,12 @@ void init_redirectStdio() {
 }
 
 void init_setupAccounts() {
-    NSString *controlPath = [@(getenv("ANGLE_HOME")) stringByAppendingPathComponent:@"accounts"];
+    NSString *controlPath = [@(getenv("POJAV_HOME")) stringByAppendingPathComponent:@"accounts"];
     [fm createDirectoryAtPath:controlPath withIntermediateDirectories:NO attributes:nil error:nil];
 }
 
 void init_setupCustomControls() {
-    NSString *controlPath = [@(getenv("ANGLE_HOME")) stringByAppendingPathComponent:@"controlmap"];
+    NSString *controlPath = [@(getenv("POJAV_HOME")) stringByAppendingPathComponent:@"controlmap"];
     [fm createDirectoryAtPath:controlPath withIntermediateDirectories:NO attributes:nil error:nil];
     generateAndSaveDefaultControl();
     NSString *gamepadControlPath = [controlPath stringByAppendingPathComponent:@"gamepads"];
@@ -210,7 +213,7 @@ void init_setupMultiDir() {
         NSLog(@"[Pre-init] Restored game directory preference (%@)\n", multidir);
     }
 
-    const char *home = getenv("ANGLE_HOME");
+    const char *home = getenv("POJAV_HOME");
     NSString *lasmPath = [NSString stringWithFormat:@"%s/Library/Application Support/minecraft", home];
     NSString *multidirPath = [NSString stringWithFormat:@"%s/instances/%@", home, multidir];
 
@@ -227,12 +230,12 @@ void init_setupMultiDir() {
     [fm removeItemAtPath:lasmPath error:nil];
     [fm createSymbolicLinkAtPath:lasmPath withDestinationPath:multidirPath error:nil];
     [fm changeCurrentDirectoryPath:lasmPath];
-    setenv("ANGLE_GAME_DIR", lasmPath.UTF8String, 1);
+    setenv("POJAV_GAME_DIR", lasmPath.UTF8String, 1);
 }
 
 void init_setupResolvConf() {
     // Write known DNS servers to the config
-    NSString *path = [NSString stringWithFormat:@"%s/resolv.conf", getenv("ANGLE_HOME")];
+    NSString *path = [NSString stringWithFormat:@"%s/resolv.conf", getenv("POJAV_HOME")];
     if (![fm fileExistsAtPath:path]) {
         [@"nameserver 8.8.8.8\n"
          @"nameserver 8.8.4.4"
@@ -248,7 +251,7 @@ void init_setupHomeDirectory() {
     
     BOOL isNotSandboxed = [@(getenv("HOME")).lastPathComponent isEqualToString:NSUserName()];
     homeDir = [NSString stringWithFormat:@"%s/Documents%@", getenv("HOME"),
-        isNotSandboxed ? @"/AngleLauncher":@""];
+        isNotSandboxed ? @"/PojavLauncher":@""];
 
     if (![fm fileExistsAtPath:homeDir] ) {
         [fm createDirectoryAtPath:homeDir withIntermediateDirectories:NO attributes:nil error:&homeError];
@@ -261,7 +264,7 @@ void init_setupHomeDirectory() {
         [fm createDirectoryAtPath:homeDir withIntermediateDirectories:YES attributes:nil error:&homeError];
     }
     
-    setenv("ANGLE_HOME", realpath(homeDir.UTF8String, NULL), 1);
+    setenv("POJAV_HOME", realpath(homeDir.UTF8String, NULL), 1);
 }
 
 int main(int argc, char *argv[]) {
@@ -296,7 +299,7 @@ int main(int argc, char *argv[]) {
 
     loadPreferences(NO);
     debugLogEnabled = getPrefBool(@"general.debug_logging");
-    NSLog(@"[Debugging] Debug log enabled: %@", debugLogEnabled ? @"YES" : @"YES");
+    NSLog(@"[Debugging] Debug log enabled: %@", debugLogEnabled ? @"YES" : @"NO");
 
     init_setupResolvConf();
     init_setupMultiDir();

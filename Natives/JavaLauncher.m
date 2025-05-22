@@ -20,6 +20,14 @@
 
 extern char **environ;
 
+BOOL validateVirtualMemorySpace(int size) {
+    void *map = mmap(0, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    // Check if process successfully maps and unmaps a contiguous range
+    if (map == MAP_FAILED || munmap(map, size) != 0)
+        return NO;
+    return YES;
+}
+
 void init_loadDefaultEnv() {
     /* Define default env */
 
@@ -35,8 +43,8 @@ void init_loadDefaultEnv() {
     // Fix white color on banner and sheep, since GL4ES 1.1.5
     setenv("LIBGL_NORMALIZE", "1", 1);
 
-    // Override OpenGL version to 4.5 for Zink
-    setenv("MESA_GL_VERSION_OVERRIDE", "4.5", 1);
+    // Override OpenGL version to 4.1 for Zink
+    setenv("MESA_GL_VERSION_OVERRIDE", "4.1", 1);
 
     // Runs JVM in a separate thread
     setenv("HACK_IGNORE_START_ON_FIRST_THREAD", "1", 1);
@@ -122,18 +130,18 @@ int launchJVM(NSString *username, id launchTarget, int width, int height, int mi
             defaultJRETag = @"1_17_newer";
         }
 
-        // Setup ANGLE_RENDERER
+        // Setup POJAV_RENDERER
         NSString *renderer = [PLProfiles resolveKeyForCurrentProfile:@"renderer"];
         NSLog(@"[JavaLauncher] RENDERER is set to %@\n", renderer);
-        setenv("ANGLE_RENDERER", renderer.UTF8String, 1);
+        setenv("POJAV_RENDERER", renderer.UTF8String, 1);
         // Setup gameDir
         gameDir = [NSString stringWithFormat:@"%s/instances/%@/%@",
-            getenv("ANGLE_HOME"), getPrefObject(@"general.game_directory"),
+            getenv("POJAV_HOME"), getPrefObject(@"general.game_directory"),
             [PLProfiles resolveKeyForCurrentProfile:@"gameDir"]]
             .stringByStandardizingPath;
     } else {
         defaultJRETag = @"execute_jar";
-        gameDir = @(getenv("ANGLE_GAME_DIR"));
+        gameDir = @(getenv("POJAV_GAME_DIR"));
         launchJar = YES;
     }
     NSLog(@"[JavaLauncher] Looking for Java %d or later", minVersion);
@@ -145,7 +153,7 @@ int launchJVM(NSString *username, id launchTarget, int width, int height, int mi
         showDialog(localize(@"Error", nil), [NSString stringWithFormat:localize(@"java.error.missing_runtime", nil),
             isExecuteJar ? [launchTarget lastPathComponent] : PLProfiles.current.selectedProfile[@"lastVersionId"], minVersion]);
         return 1;
-    } else if ([javaHome hasPrefix:@(getenv("ANGLE_HOME"))]) {
+    } else if ([javaHome hasPrefix:@(getenv("POJAV_HOME"))]) {
         // Symlink libawt_xawt.dylib
         NSString *dest = [NSString stringWithFormat:@"%@/lib/libawt_xawt.dylib", javaHome];
         NSString *source = [NSString stringWithFormat:@"%@/Frameworks/libawt_xawt.dylib", NSBundle.mainBundle.bundlePath];
@@ -167,6 +175,11 @@ int launchJVM(NSString *username, id launchTarget, int width, int height, int mi
         allocmem = getPrefInt(@"java.allocated_memory");
     }
     NSLog(@"[JavaLauncher] Max RAM allocation is set to %d MB", allocmem);
+    if (!validateVirtualMemorySpace(allocmem)) {
+        UIKit_returnToSplitView();
+        showDialog(localize(@"Error", nil), @"Insufficient contiguous virtual memory space. Lower memory allocation and try again.");
+        return 1;
+    }
 
     int margc = -1;
     const char *margv[1000];
@@ -174,13 +187,13 @@ int launchJVM(NSString *username, id launchTarget, int width, int height, int mi
     margv[++margc] = [NSString stringWithFormat:@"%@/bin/java", javaHome].UTF8String;
     margv[++margc] = "-XstartOnFirstThread";
     if (!launchJar) {
-        margv[++margc] = "-Djava.system.class.loader=net.congcq.anglelaunch.AngleClassLoader";
+        margv[++margc] = "-Djava.system.class.loader=net.kdt.pojavlaunch.PojavClassLoader";
     }
     margv[++margc] = "-Xms128M";
     margv[++margc] = [NSString stringWithFormat:@"-Xmx%dM", allocmem].UTF8String;
     margv[++margc] = [NSString stringWithFormat:@"-Djava.library.path=%@/Frameworks", NSBundle.mainBundle.bundlePath].UTF8String;
     margv[++margc] = [NSString stringWithFormat:@"-Duser.dir=%@", gameDir].UTF8String;
-    margv[++margc] = [NSString stringWithFormat:@"-Duser.home=%s", getenv("ANGLE_HOME")].UTF8String;
+    margv[++margc] = [NSString stringWithFormat:@"-Duser.home=%s", getenv("POJAV_HOME")].UTF8String;
     margv[++margc] = [NSString stringWithFormat:@"-Duser.timezone=%@", NSTimeZone.localTimeZone.name].UTF8String;
     margv[++margc] = [NSString stringWithFormat:@"-DUIScreen.maximumFramesPerSecond=%d", (int)UIScreen.mainScreen.maximumFramesPerSecond].UTF8String;
     margv[++margc] = "-Dorg.lwjgl.glfw.checkThread0=false";
@@ -189,7 +202,7 @@ int launchJVM(NSString *username, id launchTarget, int width, int height, int mi
     margv[++margc] = "-Dlog4j2.formatMsgNoLookups=true";
 
     // Preset OpenGL libname
-    const char *glLibName = getenv("ANGLE_RENDERER");
+    const char *glLibName = getenv("POJAV_RENDERER");
     if (glLibName) {
         if (!strcmp(glLibName, "auto")) {
             // workaround only applies to 1.20.2+
@@ -298,7 +311,7 @@ int launchJVM(NSString *username, id launchTarget, int width, int height, int mi
     }
     margv[++margc] = "-cp";
     margv[++margc] = classpath.UTF8String;
-    margv[++margc] = "net.congcq.anglelaunch.AngleLauncher";
+    margv[++margc] = "net.kdt.pojavlaunch.PojavLauncher";
 
     if (launchJar) {
         margv[++margc] = "-jar";
