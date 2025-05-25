@@ -40,7 +40,7 @@ AliasDecl(glPushDebugGroup, KHR)
 AliasDecl(glBindFragDataLocation, EXT)
 AliasDecl(glBindFragDataLocationIndexed, EXT)
 
-// Hidden finctions
+// Hidden functions
 AliasDeclPriv(DrawBuffer)
 AliasDeclPriv(PolygonMode)
 
@@ -162,35 +162,6 @@ int isProxyTexture(GLenum target) {
     return 0;
 }
 
-GLenum get_textarget_query_param(GLenum target) {
-    switch (target) {
-        case GL_TEXTURE_2D:
-            return GL_TEXTURE_BINDING_2D;
-        case GL_TEXTURE_2D_MULTISAMPLE:
-            return GL_TEXTURE_BINDING_2D_MULTISAMPLE;
-        case GL_TEXTURE_2D_MULTISAMPLE_ARRAY:
-            return GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY;
-        case GL_TEXTURE_3D:
-            return GL_TEXTURE_BINDING_3D;
-        case GL_TEXTURE_2D_ARRAY:
-            return GL_TEXTURE_BINDING_2D_ARRAY;
-        case GL_TEXTURE_CUBE_MAP_NEGATIVE_X:
-        case GL_TEXTURE_CUBE_MAP_NEGATIVE_Y:
-        case GL_TEXTURE_CUBE_MAP_NEGATIVE_Z:
-        case GL_TEXTURE_CUBE_MAP_POSITIVE_X:
-        case GL_TEXTURE_CUBE_MAP_POSITIVE_Y:
-        case GL_TEXTURE_CUBE_MAP_POSITIVE_Z:
-        case GL_TEXTURE_CUBE_MAP:
-            return GL_TEXTURE_BINDING_CUBE_MAP;
-        case GL_TEXTURE_CUBE_MAP_ARRAY:
-            return GL_TEXTURE_BINDING_CUBE_MAP_ARRAY;
-        case GL_TEXTURE_BUFFER:
-            return GL_TEXTURE_BUFFER_BINDING;
-        default:
-            return 0;
-    }
-}
-
 static int inline nlevel(int size, int level) {
     if(size) {
         size>>=level;
@@ -198,8 +169,6 @@ static int inline nlevel(int size, int level) {
     }
     return size;
 }
-
-static bool trigger_texlevelparameter = false;
 
 void glGetTexLevelParameteriv(GLenum target, GLint level, GLenum pname, GLint *params) {
     LOOKUP_FUNC(glGetTexLevelParameteriv)
