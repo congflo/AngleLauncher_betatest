@@ -88,7 +88,7 @@ void pojavSetWindowHint(int hint, int value) {
                 break;
             // case 4: use Zink?
             default:
-                setenv("POJAV_RENDERER", RENDERER_NAME_MTL_ANGLE, 1);
+                setenv("POJAV_RENDERER", RENDERER_NAME_MOBILEGLUES, 1);
                 JNI_LWJGL_changeRenderer(RENDERER_NAME_MOBILEGLUES);
                 break;
         }
