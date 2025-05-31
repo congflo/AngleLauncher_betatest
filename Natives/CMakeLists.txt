@@ -56,6 +56,18 @@ set(CMAKE_FRAMEWORK_PATH "${CMAKE_CURRENT_LIST_DIR}/resources/Frameworks")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -rpath @executable_path/Frameworks -rpath @loader_path/Frameworks")
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -rpath @executable_path/Frameworks -rpath @loader_path/Frameworks")
 
+# ANGLE wrapper for 1.17+
+add_library(tinygl4angle SHARED
+  external/gl4es/string_utils.c
+  external/gl4es/tinygl4angle.c
+)
+target_link_libraries(tinygl4angle
+  "${GLOBAL_LDFLAGS}"
+  "-F'${CMAKE_CURRENT_LIST_DIR}/resources/Frameworks'"
+  "-framework libEGL"
+  "-framework libGLESv2"
+)
+
 # AFNetworking
 add_library(AFNetworking SHARED
   external/AFNetworking/AFNetworking/AFSecurityPolicy.m
