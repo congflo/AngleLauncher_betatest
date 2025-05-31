@@ -94,7 +94,7 @@ jobs:
           password: ${{ secrets.ELLIE_MINI_SECRET }}
         run: |
           export PATH=/opt/procursus/bin:/opt/homebrew/bin:$PATH
-          export RUNNER=1 SLIMMED=1
+          export SLIMMED=1
           if [ "${{ matrix.platform_name }}" == "ios" ]; then
             gmake -j"$(sysctl -n hw.ncpu)" dsym package PLATFORM=${{ matrix.platform }}
             gmake -j"$(sysctl -n hw.ncpu)" dsym package PLATFORM=${{ matrix.platform }} TROLLSTORE_JIT_ENT=1
